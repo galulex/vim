@@ -1,5 +1,8 @@
 colo railscasts
 set showtabline=2 "Always shows tabs on top
+filetype plugin indent on         " Turn on file type detection.
+set expandtab ts=2 sw=2 ai
+set number
 
 "Tabs settings
 :nmap <C-S-tab> :tabprevious<cr>
