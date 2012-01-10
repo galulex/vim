@@ -34,3 +34,13 @@ nnoremap <silent> <tab> :BufExplorer<CR>
 :map <C-a> <esc>ggVG<end>
 
 :map <F6> :source $MYVIMRC<cr>
+
+set backspace=indent,eol,start    " Intuitive backspacing.
+set incsearch                     " Highlight matches as you type.
+set hlsearch                      " Highlight matches.
+set scrolloff=10                  " Show 3 lines of context around the cursor.
+set visualbell                    " No beeping.
+set nobackup                      " Don't make a backup before overwriting a file.
+set nowritebackup                 " And again.
+set noswapfile
+set novisualbell
