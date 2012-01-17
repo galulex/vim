@@ -1,7 +1,7 @@
 colo railscasts
-set showtabline=2 "Always shows tabs on top
 set number
 set expandtab ts=2 sw=2 ai
+set showtabline=2                 " Always shows tabs on top
 set backspace=indent,eol,start    " Intuitive backspacing.
 set incsearch                     " Highlight matches as you type.
 set hlsearch                      " Highlight matches.
