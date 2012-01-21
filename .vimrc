@@ -9,6 +9,7 @@ set scrolloff=10                  " Show 3 lines of context around the cursor.
 set visualbell                    " No beeping.
 set nobackup                      " Don't make a backup before overwriting a file.
 set nowritebackup                 " And again.
+filetype indent on                " Turn on file type detection.
 set noswapfile
 set novisualbell
 
@@ -24,7 +25,6 @@ set novisualbell
 :imap <C-tab> <ESC>:tabnext<cr>i
 :imap <C-t> <ESC>:tabnew<cr>
 :map <C-e> <ESC>:q!<cr>
-nnoremap <silent> <tab> :BufExplorer<CR>
 
 :map <C-f> :Rgrep<cr>
 
