@@ -31,6 +31,7 @@ set novisualbell
 " FuzzyFinder plugin settings
 :map <A-S-o> :FuzzyFinderTextMate<cr>
 :map <F5> :ruby finder.rescan!<cr> " fuzzyfinder refresh
+nnoremap <silent> <tab> :FuzzyFinderBuffer<CR>
 
 " Rails.vim plugin settings
 :map gv :Rview<cr>
