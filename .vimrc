@@ -44,7 +44,6 @@ nnoremap <silent> <tab> :FuzzyFinderBuffer<CR>
 :imap <C-s> <ESC>:w<cr>
 nnoremap <esc> :noh<return><esc>
 
-
 " to start vim maximized
 function Maximize_Window()
   silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
