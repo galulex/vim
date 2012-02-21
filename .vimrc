@@ -1,3 +1,4 @@
+" Vim
 colo railscasts
 set number
 set expandtab ts=2 sw=2 ai
@@ -10,10 +11,15 @@ set visualbell                    " No beeping.
 set nobackup                      " Don't make a backup before overwriting a file.
 set nowritebackup                 " And again.
 filetype indent on                " Turn on file type detection.
-set noswapfile
+set noswapfile                    " Disable swp files
 set novisualbell
 
-"Tabs settings
+:map <C-s> :w<cr>
+:imap <C-s> <ESC>:w<cr>
+nnoremap <esc> :noh<return><esc>
+:map <C-a> <esc>ggVG<end>
+
+" Tabs
 :nmap <C-S-tab> :tabprevious<cr>
 :nmap <C-tab> :tabnext<cr>
 :nmap <C-t> :tabnew<cr>
@@ -26,23 +32,21 @@ set novisualbell
 :imap <C-t> <ESC>:tabnew<cr>
 :map <C-e> <ESC>:q!<cr>
 
+" Rgrep
 :map <C-f> :Rgrep<cr>
+:let Grep_Default_Filelist = '*.*'
+:let Grep_Skip_Files = '*.log'
 
-" FuzzyFinder plugin settings
+" FuzzyFinder
+let g:fuzzy_ignore = "*.png;*.jpeg;*.jpg;*.gif;*.log"
 :map <A-S-o> :FuzzyFinderTextMate<cr>
 :map <F5> :ruby finder.rescan!<cr> " fuzzyfinder refresh
 nnoremap <silent> <tab> :FuzzyFinderBuffer<CR>
 
-" Rails.vim plugin settings
+" Rails
 :map gv :Rview<cr>
 :map gc :Rcontroller<cr>
 :map gm :Rmodel<cr>
-
-:map <C-a> <esc>ggVG<end>
-:map <C-s> :w<cr>
-
-:imap <C-s> <ESC>:w<cr>
-nnoremap <esc> :noh<return><esc>
 
 " to start vim maximized
 function Maximize_Window()
