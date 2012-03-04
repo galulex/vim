@@ -12,6 +12,8 @@ set nobackup                      " Don't make a backup before overwriting a fil
 set nowritebackup                 " And again.
 filetype indent on                " Turn on file type detection.
 set noswapfile                    " Disable swp files
+set shortmess=filmnrxtTI          " Disble intro message
+set nohidden                      " Remove the buffer after tab close
 set novisualbell
 
 :map <C-s> :w<cr>
@@ -37,8 +39,13 @@ nnoremap <esc> :noh<return><esc>
 :let Grep_Default_Filelist = '*.*'
 :let Grep_Skip_Files = '*.log'
 
+" Syntastic
+let g:syntastic_enable_signs=1
+let g:syntastic_quiet_warnings=1
+
 " FuzzyFinder
 let g:fuzzy_ignore = "*.png;*.jpeg;*.jpg;*.gif;*.log"
+let g:fuzzy_matching_limit = 10
 :map <A-S-o> :FuzzyFinderTextMate<cr>
 :map <F5> :ruby finder.rescan!<cr> " fuzzyfinder refresh
 nnoremap <silent> <tab> :FuzzyFinderBuffer<CR>
@@ -47,6 +54,7 @@ nnoremap <silent> <tab> :FuzzyFinderBuffer<CR>
 :map gv :Rview<cr>
 :map gc :Rcontroller<cr>
 :map gm :Rmodel<cr>
+:map gh :Rhelper<cr>
 
 " to start vim maximized
 function Maximize_Window()
