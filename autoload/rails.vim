@@ -608,7 +608,7 @@ endfunction
 
 function! s:buffer_name() dict abort
   let app = self.app()
-  let f = s:gsub(fnamemodify(bufname(self.number()),':p'),'\\ @!','/')
+  let f = s:gsub(resolve(fnamemodify(bufname(self.number()),':p')),'\\ @!','/')
   let f = s:sub(f,'/$','')
   let sep = matchstr(f,'^[^\\/]\{3,\}\zs[\\/]')
   if sep != ""
@@ -1030,6 +1030,8 @@ function! s:app_tags_command() dict
     let cmd = "exuberant-ctags"
   elseif executable("ctags-exuberant")
     let cmd = "ctags-exuberant"
+  elseif executable("exctags")
+    let cmd = "exctags"
   elseif executable("ctags")
     let cmd = "ctags"
   elseif executable("ctags.exe")
@@ -1272,9 +1274,9 @@ function! s:readable_default_rake_task(lnum) dict abort
     let ver = matchstr(self.name(),'\<db/migrate/0*\zs\d*\ze_')
     if ver != ""
       let method = self.last_method(lnum)
-      if method == "down"
+      if method == "down" || lnum == 1
         return "db:migrate:down VERSION=".ver
-      elseif method == "up"
+      elseif method == "up" || lnum == line('$')
         return "db:migrate:up VERSION=".ver
       elseif lnum > 0
         return "db:migrate:down db:migrate:up VERSION=".ver
@@ -1688,19 +1690,19 @@ endfunction
 function! s:BufNavCommands()
   command! -buffer -bar -nargs=? -complete=customlist,s:Complete_cd Rcd   :cd `=rails#app().path(<q-args>)`
   command! -buffer -bar -nargs=? -complete=customlist,s:Complete_cd Rlcd :lcd `=rails#app().path(<q-args>)`
-  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find Rfind    :call s:Find(<count>,'<bang>' ,<f-args>)
-  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find REfind   :call s:Find(<count>,'E<bang>',<f-args>)
-  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find RSfind   :call s:Find(<count>,'S<bang>',<f-args>)
-  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find RVfind   :call s:Find(<count>,'V<bang>',<f-args>)
-  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find RTfind   :call s:Find(<count>,'T<bang>',<f-args>)
-  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find Rsfind   :<count>RSfind<bang> <args>
-  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find Rtabfind :<count>RTfind<bang> <args>
-  command! -buffer -bar -nargs=* -bang    -complete=customlist,s:Complete_edit Redit    :call s:Edit(<count>,'<bang>' ,<f-args>)
-  command! -buffer -bar -nargs=* -bang    -complete=customlist,s:Complete_edit REedit   :call s:Edit(<count>,'E<bang>',<f-args>)
-  command! -buffer -bar -nargs=* -bang    -complete=customlist,s:Complete_edit RSedit   :call s:Edit(<count>,'S<bang>',<f-args>)
-  command! -buffer -bar -nargs=* -bang    -complete=customlist,s:Complete_edit RVedit   :call s:Edit(<count>,'V<bang>',<f-args>)
-  command! -buffer -bar -nargs=* -bang    -complete=customlist,s:Complete_edit RTedit   :call s:Edit(<count>,'T<bang>',<f-args>)
-  command! -buffer -bar -nargs=* -range=0 -complete=customlist,s:Complete_edit RDedit   :call s:Edit(<count>,'<line1>D<bang>',<f-args>)
+  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find Rfind    :call s:warn( 'Rfind has been deprecated in favor of :1R or :find' )|call s:Find(<count>,'<bang>' ,<f-args>)
+  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find REfind   :call s:warn('REfind has been deprecated in favor of :1RE or :find')|call s:Find(<count>,'E<bang>',<f-args>)
+  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find RSfind   :call s:warn('RSfind has been deprecated in favor of :1RS or :find')|call s:Find(<count>,'S<bang>',<f-args>)
+  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find RVfind   :call s:warn('RVfind has been deprecated in favor of :1RV or :find')|call s:Find(<count>,'V<bang>',<f-args>)
+  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find RTfind   :call s:warn('RTfind has been deprecated in favor of :1RT or :find')|call s:Find(<count>,'T<bang>',<f-args>)
+  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find Rsfind   :call s:warn('Rsfind has been deprecated in favor of :1RS or :sfind')|<count>RSfind<bang> <args>
+  command! -buffer -bar -nargs=* -count=1 -complete=customlist,s:Complete_find Rtabfind :call s:warn('Rtabfind has been deprecated in favor of :1RT or :tabfind')|<count>RTfind<bang> <args>
+  command! -buffer -bar -nargs=* -bang    -complete=customlist,s:Complete_edit Redit    :call s:warn( 'Redit has been deprecated in favor of :R')|call s:Edit(<count>,'<bang>' ,<f-args>)
+  command! -buffer -bar -nargs=* -bang    -complete=customlist,s:Complete_edit REedit   :call s:warn('REedit has been deprecated in favor of :RE')|call s:Edit(<count>,'E<bang>',<f-args>)
+  command! -buffer -bar -nargs=* -bang    -complete=customlist,s:Complete_edit RSedit   :call s:warn('RSedit has been deprecated in favor of :RS')|call s:Edit(<count>,'S<bang>',<f-args>)
+  command! -buffer -bar -nargs=* -bang    -complete=customlist,s:Complete_edit RVedit   :call s:warn('RVedit has been deprecated in favor of :RV')|call s:Edit(<count>,'V<bang>',<f-args>)
+  command! -buffer -bar -nargs=* -bang    -complete=customlist,s:Complete_edit RTedit   :call s:warn('RTedit has been deprecated in favor of :RT')|call s:Edit(<count>,'T<bang>',<f-args>)
+  command! -buffer -bar -nargs=* -range=0 -complete=customlist,s:Complete_edit RDedit   :call s:warn('RDedit has been deprecated in favor of :RD')|call s:Edit(<count>,'<line1>D<bang>',<f-args>)
   command! -buffer -bar -nargs=* -range=0 -complete=customlist,s:Complete_related A     :call s:Alternate('<bang>', <line1>,<line2>,<count>,<f-args>)
   command! -buffer -bar -nargs=* -range=0 -complete=customlist,s:Complete_related AE    :call s:Alternate('E<bang>',<line1>,<line2>,<count>,<f-args>)
   command! -buffer -bar -nargs=* -range=0 -complete=customlist,s:Complete_related AS    :call s:Alternate('S<bang>',<line1>,<line2>,<count>,<f-args>)
@@ -2132,6 +2134,7 @@ function! s:BufFinderCommands()
   call s:addfilecmds("controller")
   call s:addfilecmds("mailer")
   call s:addfilecmds("migration")
+  call s:addfilecmds("schema")
   call s:addfilecmds("observer")
   call s:addfilecmds("helper")
   call s:addfilecmds("layout")
@@ -2249,7 +2252,7 @@ endfunction
 
 function! s:javascriptList(A,L,P)
   let list = rails#app().relglob('app/assets/javascripts/','**/*.*','')
-  call map(list,'s:sub(v:val,"\\..*$","")')
+  call map(list,'s:sub(v:val,"\\.js\\..*|\\.\\w+$","")')
   let list += rails#app().relglob("public/javascripts/","**/*",".js")
   return s:completion_filter(list,a:A)
 endfunction
@@ -2285,6 +2288,14 @@ function! s:migrationList(A,L,P)
     call map(migrations,'s:sub(v:val,"^[0-9]*_","")')
     return s:autocamelize(migrations,a:A)
   endif
+endfunction
+
+function! s:schemaList(A,L,P)
+  let tables = s:readfile(rails#app().path('db/schema.rb'))
+  let table_re = '^\s\+create_table\s["'':]\zs[^"'',]*\ze'
+  call map(tables,'matchstr(v:val, table_re)')
+  call filter(tables,'strlen(v:val)')
+  return s:autocamelize(tables, a:A)
 endfunction
 
 function! s:unittestList(A,L,P)
@@ -2514,6 +2525,15 @@ function! s:migrationEdit(cmd,...)
   else
     return s:error("Migration not found".(arg=='' ? '' : ': '.arg))
   endif
+endfunction
+
+function! s:schemaEdit(cmd,...)
+  let cmd = s:findcmdfor(a:cmd)
+  let schema = 'db/'.s:environment().'_structure.sql'
+  if rails#app().has_file('db/schema.rb') || !rails#app().has_file(schema)
+    let schema = 'db/schema.rb'
+  endif
+  call s:findedit(cmd,schema.(a:0 ? '#'.a:1 : ''))
 endfunction
 
 function! s:fixturesEdit(cmd,...)
@@ -3474,26 +3494,26 @@ endfunction
 
 function! s:helpermethods()
   return ""
-        \."atom_feed audio_path audio_tag auto_discovery_link_tag auto_link "
-        \."button_to button_to_function "
-        \."cache capture cdata_section check_box check_box_tag collection_select concat content_for content_tag content_tag_for csrf_meta_tag current_cycle cycle "
-        \."date_select datetime_select debug distance_of_time_in_words distance_of_time_in_words_to_now div_for dom_class dom_id draggable_element draggable_element_js drop_receiving_element drop_receiving_element_js "
-        \."email_field email_field_tag error_message_on error_messages_for escape_javascript escape_once excerpt "
-        \."favicon_link_tag field_set_tag fields_for file_field file_field_tag form form_for form_tag "
+        \."action_name atom_feed audio_path audio_tag auto_discovery_link_tag "
+        \."button_tag button_to button_to_function "
+        \."cache capture cdata_section check_box check_box_tag collection_select concat content_for content_tag content_tag_for controller controller_name controller_path convert_to_model cookies csrf_meta_tag csrf_meta_tags current_cycle cycle "
+        \."date_select datetime_select debug distance_of_time_in_words distance_of_time_in_words_to_now div_for dom_class dom_id "
+        \."email_field email_field_tag escape_javascript escape_once excerpt "
+        \."favicon_link_tag field_set_tag fields_for file_field file_field_tag flash form_for form_tag "
         \."grouped_collection_select grouped_options_for_select "
-        \."hidden_field hidden_field_tag highlight "
-        \."image_path image_submit_tag image_tag input "
-        \."javascript_cdata_section javascript_include_tag javascript_path javascript_tag "
-        \."l label label_tag link_to link_to_function link_to_if link_to_unless link_to_unless_current localize "
+        \."headers hidden_field hidden_field_tag highlight "
+        \."image_alt image_path image_submit_tag image_tag "
+        \."j javascript_cdata_section javascript_include_tag javascript_path javascript_tag "
+        \."l label label_tag link_to link_to_function link_to_if link_to_unless link_to_unless_current localize logger "
         \."mail_to "
         \."number_field number_field_tag number_to_currency number_to_human number_to_human_size number_to_percentage number_to_phone number_with_delimiter number_with_precision "
         \."option_groups_from_collection_for_select options_for_select options_from_collection_for_select "
-        \."password_field password_field_tag path_to_audio path_to_image path_to_javascript path_to_stylesheet path_to_video phone_field phone_field_tag pluralize "
-        \."radio_button radio_button_tag range_field range_field_tag raw remote_function reset_cycle "
-        \."safe_concat sanitize sanitize_css search_field search_field_tag select select_date select_datetime select_day select_hour select_minute select_month select_second select_tag select_time select_year simple_format sortable_element sortable_element_js strip_links strip_tags stylesheet_link_tag stylesheet_path submit_tag "
-        \."t tag telephone_field telephone_field_tag text_area text_area_tag text_field text_field_tag time_ago_in_words time_select time_zone_options_for_select time_zone_select translate truncate "
-        \."update_page update_page_tag url_field url_field_tag url_for url_options "
-        \."video_path video_tag visual_effect "
+        \."params password_field password_field_tag path_to_audio path_to_image path_to_javascript path_to_stylesheet path_to_video phone_field phone_field_tag pluralize provide "
+        \."radio_button radio_button_tag range_field range_field_tag raw render request request_forgery_protection_token reset_cycle response "
+        \."safe_concat safe_join sanitize sanitize_css search_field search_field_tag select select_date select_datetime select_day select_hour select_minute select_month select_second select_tag select_time select_year session simple_format strip_links strip_tags stylesheet_link_tag stylesheet_path submit_tag "
+        \."t tag telephone_field telephone_field_tag text_area text_area_tag text_field text_field_tag time_ago_in_words time_select time_tag time_zone_options_for_select time_zone_select translate truncate "
+        \."url_field url_field_tag url_for url_options "
+        \."video_path video_tag "
         \."word_wrap"
 endfunction
 
@@ -3560,24 +3580,23 @@ function! s:BufSyntax()
         syn keyword rubyRailsRenderMethod mail render
         syn keyword rubyRailsControllerMethod attachments default helper helper_attr helper_method
       endif
-      if buffer.type_name('controller','view','helper')
-        syn keyword rubyRailsMethod params request response session headers cookies flash
-        syn keyword rubyRailsRenderMethod render
-        syn keyword rubyRailsMethod logger polymorphic_path polymorphic_url
-      endif
       if buffer.type_name('helper','view')
+        syn keyword rubyRailsViewMethod polymorphic_path polymorphic_url
         exe "syn keyword rubyRailsHelperMethod ".s:gsub(s:helpermethods(),'<%(content_for|select)\s+','')
         syn match rubyRailsHelperMethod '\<select\>\%(\s*{\|\s*do\>\|\s*(\=\s*&\)\@!'
         syn match rubyRailsHelperMethod '\<\%(content_for?\=\|current_page?\)'
-        syn match rubyRailsViewMethod '\.\@<!\<\(h\|html_escape\|u\|url_encode\|controller\)\>'
+        syn match rubyRailsViewMethod '\.\@<!\<\(h\|html_escape\|u\|url_encode\)\>'
         if buffer.type_name('view-partial')
           syn keyword rubyRailsMethod local_assigns
         endif
       elseif buffer.type_name('controller')
+        syn keyword rubyRailsMethod params request response session headers cookies flash
+        syn keyword rubyRailsRenderMethod render
+        syn keyword rubyRailsMethod logger polymorphic_path polymorphic_url
         syn keyword rubyRailsControllerMethod helper helper_attr helper_method filter layout url_for serialize exempt_from_layout filter_parameter_logging hide_action cache_sweeper protect_from_forgery caches_page cache_page caches_action expire_page expire_action rescue_from
         syn keyword rubyRailsRenderMethod head redirect_to render_to_string respond_with
         syn match   rubyRailsRenderMethod '\<respond_to\>?\@!'
-        syn keyword rubyRailsFilterMethod before_filter append_before_filter prepend_before_filter after_filter append_after_filter prepend_after_filter around_filter append_around_filter prepend_around_filter skip_before_filter skip_after_filter
+        syn keyword rubyRailsFilterMethod before_filter append_before_filter prepend_before_filter after_filter append_after_filter prepend_after_filter around_filter append_around_filter prepend_around_filter skip_before_filter skip_after_filter skip_filter
         syn keyword rubyRailsFilterMethod verify
       endif
       if buffer.type_name('db-migration','db-schema')
@@ -3595,13 +3614,13 @@ function! s:BufSyntax()
           syn keyword rubyRailsTestControllerMethod assert_response assert_redirected_to assert_template assert_recognizes assert_generates assert_routing assert_dom_equal assert_dom_not_equal assert_select assert_select_rjs assert_select_encoded assert_select_email assert_tag assert_no_tag
         endif
       elseif buffer.type_name('spec')
-        syn keyword rubyRailsTestMethod describe context it its specify shared_examples_for it_should_behave_like before after around subject fixtures controller_name helper_name
+        syn keyword rubyRailsTestMethod describe context it its specify shared_examples_for it_should_behave_like before after around subject fixtures controller_name helper_name scenario feature background
         syn match rubyRailsTestMethod '\<let\>!\='
         syn keyword rubyRailsTestMethod violated pending expect double mock mock_model stub_model
         syn match rubyRailsTestMethod '\.\@<!\<stub\>!\@!'
         if !buffer.type_name('spec-model')
           syn match   rubyRailsTestControllerMethod  '\.\@<!\<\%(get\|post\|put\|delete\|head\|process\|assigns\)\>'
-          syn keyword rubyRailsTestControllerMethod  integrate_views
+          syn keyword rubyRailsTestControllerMethod  integrate_views render_views
           syn keyword rubyRailsMethod params request response session flash
           syn keyword rubyRailsMethod polymorphic_path polymorphic_url
         endif
@@ -3662,9 +3681,8 @@ function! s:BufSyntax()
       exe 'syn keyword '.&syntax.'RailsHelperMethod '.s:gsub(s:helpermethods(),'<%(content_for|select)\s+','').' contained containedin=@'.&syntax.'RailsRegions'
       exe 'syn match '.&syntax.'RailsHelperMethod "\<select\>\%(\s*{\|\s*do\>\|\s*(\=\s*&\)\@!" contained containedin=@'.&syntax.'RailsRegions'
       exe 'syn match '.&syntax.'RailsHelperMethod "\<\%(content_for?\=\|current_page?\)" contained containedin=@'.&syntax.'RailsRegions'
-      exe 'syn keyword '.&syntax.'RailsMethod debugger logger polymorphic_path polymorphic_url contained containedin=@'.&syntax.'RailsRegions'
-      exe 'syn keyword '.&syntax.'RailsMethod params request response session headers cookies flash contained containedin=@'.&syntax.'RailsRegions'
-      exe 'syn match '.&syntax.'RailsViewMethod "\.\@<!\<\(h\|html_escape\|u\|url_encode\|controller\)\>" contained containedin=@'.&syntax.'RailsRegions'
+      exe 'syn keyword '.&syntax.'RailsMethod debugger polymorphic_path polymorphic_url contained containedin=@'.&syntax.'RailsRegions'
+      exe 'syn match '.&syntax.'RailsViewMethod "\.\@<!\<\(h\|html_escape\|u\|url_encode\)\>" contained containedin=@'.&syntax.'RailsRegions'
       if buffer.type_name('view-partial')
         exe 'syn keyword '.&syntax.'RailsMethod local_assigns contained containedin=@'.&syntax.'RailsRegions'
       endif
@@ -3681,10 +3699,10 @@ function! s:BufSyntax()
       syn include @rubyTop syntax/ruby.vim
       unlet g:main_syntax
       syn cluster yamlRailsRegions contains=yamlRailsOneLiner,yamlRailsBlock,yamlRailsExpression
-      syn region  yamlRailsOneLiner   matchgroup=yamlRailsDelimiter start="^%%\@!" end="$"  contains=@rubyRailsTop	containedin=ALLBUT,@yamlRailsRegions,yamlRailsComment keepend oneline
-      syn region  yamlRailsBlock      matchgroup=yamlRailsDelimiter start="<%%\@!" end="%>" contains=@rubyTop		containedin=ALLBUT,@yamlRailsRegions,yamlRailsComment
-      syn region  yamlRailsExpression matchgroup=yamlRailsDelimiter start="<%="    end="%>" contains=@rubyTop		containedin=ALLBUT,@yamlRailsRegions,yamlRailsComment
-      syn region  yamlRailsComment    matchgroup=yamlRailsDelimiter start="<%#"    end="%>" contains=rubyTodo,@Spell	containedin=ALLBUT,@yamlRailsRegions,yamlRailsComment keepend
+      syn region  yamlRailsOneLiner   matchgroup=yamlRailsDelimiter start="^%%\@!" end="$"  contains=@rubyRailsTop      containedin=ALLBUT,@yamlRailsRegions,yamlRailsComment keepend oneline
+      syn region  yamlRailsBlock      matchgroup=yamlRailsDelimiter start="<%%\@!" end="%>" contains=@rubyTop           containedin=ALLBUT,@yamlRailsRegions,yamlRailsComment
+      syn region  yamlRailsExpression matchgroup=yamlRailsDelimiter start="<%="    end="%>" contains=@rubyTop           containedin=ALLBUT,@yamlRailsRegions,yamlRailsComment
+      syn region  yamlRailsComment    matchgroup=yamlRailsDelimiter start="<%#"    end="%>" contains=rubyTodo,@Spell    containedin=ALLBUT,@yamlRailsRegions,yamlRailsComment keepend
       syn match yamlRailsMethod '\.\@<!\<\(h\|html_escape\|u\|url_encode\)\>' contained containedin=@yamlRailsRegions
       if classes != ''
         exe "syn keyword yamlRailsUserClass ".classes." contained containedin=@yamlRailsRegions"
@@ -3701,6 +3719,9 @@ function! s:BufSyntax()
       set isk+=$
       exe "syn keyword javascriptRailsFunction ".s:javascript_functions
 
+    elseif &syntax == "scss" || &syntax == "sass"
+      syn match sassFunction "\<\%(\%(asset\|image\|font\|video\|audio\|javascript\|stylesheet\)-\%(url\|path\)\)\>(\@=" contained
+      syn match sassFunction "\<\asset-data-url\>(\@=" contained
     endif
   endif
   call s:HiDefaults()
@@ -3806,12 +3827,10 @@ endfunction
 " Mappings {{{1
 
 function! s:BufMappings()
-  nnoremap <buffer> <silent> <Plug>RailsAlternate  :<C-U>A<CR>
-  nnoremap <buffer> <silent> <Plug>RailsRelated    :<C-U>R<CR>
-  nnoremap <buffer> <silent> <Plug>RailsFind       :<C-U>REfind<CR>
-  nnoremap <buffer> <silent> <Plug>RailsSplitFind  :<C-U>RSfind<CR>
-  nnoremap <buffer> <silent> <Plug>RailsVSplitFind :<C-U>RVfind<CR>
-  nnoremap <buffer> <silent> <Plug>RailsTabFind    :<C-U>RTfind<CR>
+  nnoremap <buffer> <silent> <Plug>RailsFind       :<C-U>call <SID>Find(v:count1,'E')<CR>
+  nnoremap <buffer> <silent> <Plug>RailsSplitFind  :<C-U>call <SID>Find(v:count1,'S')<CR>
+  nnoremap <buffer> <silent> <Plug>RailsVSplitFind :<C-U>call <SID>Find(v:count1,'V')<CR>
+  nnoremap <buffer> <silent> <Plug>RailsTabFind    :<C-U>call <SID>Find(v:count1,'T')<CR>
   if g:rails_mappings
     if !hasmapto("<Plug>RailsFind")
       nmap <buffer> gf              <Plug>RailsFind
@@ -3821,12 +3840,6 @@ function! s:BufMappings()
     endif
     if !hasmapto("<Plug>RailsTabFind")
       nmap <buffer> <C-W>gf         <Plug>RailsTabFind
-    endif
-    if !hasmapto("<Plug>RailsAlternate")
-      nmap <buffer> [f              <Plug>RailsAlternate
-    endif
-    if !hasmapto("<Plug>RailsRelated")
-      nmap <buffer> ]f              <Plug>RailsRelated
     endif
     if exists("$CREAM")
       imap <buffer> <C-CR> <C-O><Plug>RailsFind
@@ -4362,7 +4375,7 @@ function! RailsBufInit(path)
   call app.source_callback("config/syntax.vim")
   if expand('%:t') =~ '\.yml\.example$'
     setlocal filetype=yaml
-  elseif expand('%:e') =~ '^\%(rjs\|rxml\|builder\)$'
+  elseif expand('%:e') =~ '^\%(rjs\|rxml\|builder\|jbuilder\)$'
     setlocal filetype=ruby
   elseif firsttime
     " Activate custom syntax
@@ -4461,7 +4474,7 @@ function! s:BufSettings()
   call self.setvar('&includeexpr','RailsIncludeexpr()')
   call self.setvar('&suffixesadd', ".rb,.".join(s:view_types,',.'))
   let ft = self.getvar('&filetype')
-  if ft =~ '^\%(e\=ruby\|[yh]aml\|javascript\|coffee\|css\|s[ac]ss\|lesscss\)$'
+  if ft =~ '^\%(e\=ruby\|[yh]aml\|coffee\|css\|s[ac]ss\|lesscss\)$'
     call self.setvar('&shiftwidth',2)
     call self.setvar('&softtabstop',2)
     call self.setvar('&expandtab',1)
@@ -4546,9 +4559,7 @@ augroup railsPluginAuto
   autocmd BufWritePost */tasks/**.rake            call rails#cache_clear("rake_tasks")
   autocmd BufWritePost */generators/**            call rails#cache_clear("generators")
   autocmd FileType * if exists("b:rails_root") | call s:BufSettings() | endif
-  autocmd Syntax ruby,eruby,yaml,haml,javascript,coffee,railslog if exists("b:rails_root") | call s:BufSyntax() | endif
-  autocmd QuickFixCmdPre  *make* call s:push_chdir()
-  autocmd QuickFixCmdPost *make* call s:pop_command()
+  autocmd Syntax ruby,eruby,yaml,haml,javascript,coffee,railslog,sass,scss if exists("b:rails_root") | call s:BufSyntax() | endif
 augroup END
 
 " }}}1

@@ -59,7 +59,7 @@ call s:SetOptDefault("rails_ctags_arguments","--languages=-javascript")
 call s:SetOptDefault("rails_default_file","README")
 call s:SetOptDefault("rails_root_url",'http://localhost:3000/')
 call s:SetOptDefault("rails_modelines",0)
-call s:SetOptDefault("rails_menu",!has('mac'))
+call s:SetOptDefault("rails_menu",0)
 call s:SetOptDefault("rails_gnu_screen",1)
 call s:SetOptDefault("rails_history_size",5)
 call s:SetOptDefault("rails_generators","controller\ngenerator\nhelper\nintegration_test\nmailer\nmetal\nmigration\nmodel\nobserver\nperformance_test\nplugin\nresource\nscaffold\nscaffold_controller\nsession_migration\nstylesheets")
@@ -79,6 +79,9 @@ function! s:escvar(r)
 endfunction
 
 function! s:Detect(filename)
+  if exists('b:rails_root')
+    return s:BufInit(b:rails_root)
+  endif
   let fn = substitute(fnamemodify(a:filename,":p"),'\c^file://','','')
   let sep = matchstr(fn,'^[^\\/]\{3,\}\zs[\\/]')
   if sep != ""
@@ -107,7 +110,7 @@ function! s:Detect(filename)
       return s:BufInit(fn)
     endif
     let ofn = fn
-    let fn = fnamemodify(ofn,':s?\(.*\)[\/]\(app\|config\|db\|doc\|features\|lib\|log\|public\|script\|spec\|stories\|test\|tmp\|vendor\)\($\|[\/].*$\)?\1?')
+    let fn = fnamemodify(ofn,':s?\(.*\)[\/]\(app\|config\|db\|doc\|extras\|features\|lib\|log\|public\|script\|spec\|stories\|test\|tmp\|vendor\)\($\|[\/].*$\)?\1?')
   endwhile
   return 0
 endfunction

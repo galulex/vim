@@ -1,7 +1,6 @@
 *rails.txt*	Plugin for working with Ruby on Rails applications
 
 Author:  Tim Pope <http://tpo.pe/>
-License: Same terms as Vim itself (see |license|)
 
 |rails-introduction|		Introduction and Feature Summary
 |rails-commands|		General Commands
@@ -71,10 +70,10 @@ actually edit a file from a Rails application.
 			|:help| rails.
 
 						*rails-:Redit*
-:Redit {file}		Edit {file}, relative to the application root.  Append
-			:line or #method to jump within the file, as in
-			:Redit app/controllers/users_controller.rb:12 or
-			:Redit app/models/user.rb#activate .
+:Redit {file}		Deprecated in favor of |:R|.
+
+						*rails-:Rfind*
+:Rfind [{file}]		Deprecated in favor of |:R| or |:find|.
 
 						*rails-:Rlog*
 :Rlog [{logfile}]	Split window and open {logfile} ($RAILS_ENV or
@@ -145,19 +144,13 @@ following features will greatly ease navigating the Rails file structure.
 
 The 'path' has been modified to include all the best places to be.
 >
-	:find blog_controller
-	:find book_test
+	:find application_controller.rb
 <
-						*rails-:Rfind*
-:Rfind [{file}]		Find {file}.  Very similar to :find, but things like
-			BlogController are properly handled, and tab complete
-			works.
-
 File Under Cursor - gf ~
 						*rails-gf*
 The |gf| command, which normally edits the current file under the cursor, has
-been remapped to take context into account. |CTRL-W_f|(open in new window) and
-|CTRL-W_gf| (open in new tab) are also remapped.
+been remapped to take context into account. |CTRL-W_f| (open in new window)
+and |CTRL-W_gf| (open in new tab) are also remapped.
 
 Example uses of |gf|, and where they might lead.
 (* indicates cursor position)
@@ -208,15 +201,17 @@ Two commands, :A and :R, are used quickly jump to an "alternate" and a
 :AS			either the same window (:A and :AE), a new split
 :AV			window (:AS), a new vertically split window (:AV), a
 :AT			new tab (:AT), or read it into the current buffer
-:AD                     (:AD).  A mapping for :A is [f .
+:AD			(:AD).
 
 	*rails-:R* *rails-:RE* *rails-:RS* *rails-:RV* *rails-:RT* *rails-:RD*
 :R			These are similar |rails-:A| and friends above, only
 :RE			they jump to the "related" file rather than the
-:RS			"alternate."  A mapping for :R is ]f .
-:RV			
-:RT
-:RD
+:RS			"alternate."  With a file name argument, they edit
+:RV			a file relative to the application root (:R Rakefile),
+:RT			and with a count and a file name argument, they find a
+:RD			file in 'path' (e.g., :1R PostsController.)  You can
+			also append a line number (post.rb:42) or a method
+			(PostsController#32) to both forms.
 
 					*rails-alternate* *rails-related*
 The alternate file is most frequently the test file, though there are
@@ -255,8 +250,8 @@ opening in a new tab, and reading the file into the current buffer.  For
 :Rmodel, those variants would be :RSmodel, :RVmodel, :RTmodel, and :RDmodel.
 There is also :REmodel which is a synonym for :Rmodel (future versions might
 allow customization of the behavior of :Rmodel).  They also allow for jumping
-to methods or line numbers using the same syntax as |:Redit|, and file
-creation can be forced by adding a ! after the filename (not after the command
+to methods or line numbers using the same syntax as |:R|, and file creation
+can be forced by adding a ! after the filename (not after the command
 itself!).
 
 :Rcontroller					|rails-:Rcontroller|
@@ -276,6 +271,7 @@ itself!).
 :Rmodel						|rails-:Rmodel|
 :Robserver					|rails-:Robserver|
 :Rplugin					|rails-:Rplugin|
+:Rschema					|rails-:Rschema|
 :Rspec						|rails-:Rspec|
 :Rstylesheet					|rails-:Rstylesheet|
 :Rtask						|rails-:Rtask|
@@ -382,6 +378,10 @@ itself!).
 			the spec for the given file, use |:A| instead).  This
 			command is only defined if there is a spec folder in
 			the root of the application.
+
+						*rails-:Rschema*
+:Rschema [{table}]	Edit the schema and optionally jump to the specified
+			table.
 
 						*rails-:Rstylesheet*
 :Rstylesheet [{name}]	Edit the stylesheet for the specified name or current
@@ -548,6 +548,8 @@ A limited amount of completion with <Tab> is supported.
 :Rserver! {options}	Same as |:Rserver|, only first attempts to kill any
 			other server using the same port.  On non-Windows
 			systems, lsof must be installed for this to work.
+			Pass - as an argument to kill the server without
+			restarting it.
 
 REFACTORING HELPERS				*rails-refactoring*
 
@@ -954,8 +956,7 @@ JavaScript files, since ctags has a tendency to choke on those.
 
 						*g:rails_default_file*  >
 	let g:rails_default_file='config/database.yml'
-File to load when a new Rails application is created, or when loading an
-existing project from the menu.  Defaults to the README.
+File to load when a new Rails application is created.  Defaults to the README.
 
 					*rails-screen* *g:rails_gnu_screen*  >
 	let g:rails_gnu_screen=1
@@ -984,8 +985,8 @@ Modelines are deprecated and disabled by default.
 						*g:rails_menu*  >
 	let g:rails_menu=1
 When 2, a Rails menu is created.  When 1, this menu is a submenu under the
-Plugin menu.  The default is 1 except on MacVim, where reports of weird
-terminal output have led to it being disabled by default.
+Plugin menu.  The default is 0, as the menu is slated for removal from future
+versions of rails.vim.
 
 						*g:rails_url*  >
 	let g:rails_url='http://localhost:3000/'
@@ -1018,5 +1019,9 @@ Bugs can be reported and the very latest development version can be retrieved
 from GitHub:
     https://github.com/tpope/vim-rails
     git clone git://github.com/tpope/vim-rails.git
+
+						*rails-license*
+Copyright (c) Tim Pope.  Distributed under the same terms as Vim itself.
+See |license|.
 
  vim:tw=78:ts=8:ft=help:norl:
