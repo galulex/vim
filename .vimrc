@@ -37,7 +37,7 @@ nnoremap <esc> :noh<return><esc>
 " Rgrep
 :map <C-f> :Rgrep<cr>
 :let Grep_Default_Filelist = '*.*'
-:let Grep_Skip_Files = '*.log'
+:let Grep_Skip_Files = '*.log *.sql'
 
 " Syntastic
 let g:syntastic_enable_signs=1
