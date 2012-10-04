@@ -15,7 +15,10 @@ set noswapfile                    " Disable swp files
 set shortmess=filmnrxtTI          " Disble intro message
 set nohidden                      " Remove the buffer after tab close
 set novisualbell
+set list
+set listchars=trail:•
 
+autocmd BufWritePre *.* :%s/\s\+$//e
 :map <C-s> :w<cr>
 :imap <C-s> <ESC>:w<cr>
 nnoremap <esc> :noh<return><esc>
@@ -38,13 +41,16 @@ nnoremap <esc> :noh<return><esc>
 :map <C-f> :Rgrep<cr>
 :let Grep_Default_Filelist = '*.*'
 :let Grep_Skip_Files = '*.log *.sql'
+:let Grep_Skip_Dirs = 'tmp system public coverage log solr'
 
 " Syntastic
 let g:syntastic_enable_signs=1
 let g:syntastic_quiet_warnings=1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
 
 " FuzzyFinder
-let g:fuzzy_ignore = "*.png;*.jpeg;*.jpg;*.gif;*.log"
+let g:fuzzy_ignore = "*.png;*.jpeg;*.jpg;*.gif;*.log;public/**/*;log/**/*;coverage/**/*;tmp/**/*;.git/**/*;.sass-cache/**/*;"
 let g:fuzzy_matching_limit = 10
 :map <A-S-o> :FuzzyFinderTextMate<cr>
 :map <F5> :ruby finder.rescan!<cr> " fuzzyfinder refresh
