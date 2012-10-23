@@ -1,7 +1,34 @@
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+
+" Plugins
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'honza/snipmate-snippets'
+Bundle 'garbas/vim-snipmate'
+Bundle 'Townk/vim-autoclose'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'bbommarito/vim-slim'
+
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/syntastic'
+
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-ragtag'
+
+Bundle 'vim-scripts/tabpage.vim'
+Bundle 'vim-scripts/Tab-Menu'
+Bundle 'vim-scripts/grep.vim'
+Bundle 'vim-scripts/VIM-Color-Picker'
+
 " Vim
-colo railscasts
-set number
-set expandtab ts=2 sw=2 ai
+colo railscasts                   " Theme
+set number                        " Numers of lines
+set expandtab ts=2 sw=2 ai        " Two spaces insted tab
 set showtabline=2                 " Always shows tabs on top
 set backspace=indent,eol,start    " Intuitive backspacing.
 set incsearch                     " Highlight matches as you type.
@@ -10,13 +37,14 @@ set scrolloff=10                  " Show 3 lines of context around the cursor.
 set visualbell                    " No beeping.
 set nobackup                      " Don't make a backup before overwriting a file.
 set nowritebackup                 " And again.
-filetype indent on                " Turn on file type detection.
 set noswapfile                    " Disable swp files
 set shortmess=filmnrxtTI          " Disble intro message
 set nohidden                      " Remove the buffer after tab close
 set novisualbell
 set list
-set listchars=trail:•
+set listchars=trail:•             " Show spaces in end of line
+filetype plugin on                " Turn on file type detection.
+filetype indent on                " Turn on file ident detection.
 
 autocmd BufWritePre *.* :%s/\s\+$//e
 :map <C-s> :w<cr>
@@ -56,6 +84,10 @@ let g:fuzzy_matching_limit = 10
 :map <F5> :ruby finder.rescan!<cr> " fuzzyfinder refresh
 nnoremap <silent> <tab> :FuzzyFinderBuffer<CR>
 
+" NerdCommenter
+:map <C-c> :call NERDComment(0,"toggle")<cr>
+:imap <C-c> :call NERDComment(0,"toggle")<cr>i
+
 " Rails
 :map gv :Rview<cr>
 :map gc :Rcontroller<cr>
@@ -66,5 +98,4 @@ nnoremap <silent> <tab> :FuzzyFinderBuffer<CR>
 function Maximize_Window()
   silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
 endfunction
-
 au GUIEnter * call Maximize_Window()
