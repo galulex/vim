@@ -12,6 +12,9 @@ Bundle 'garbas/vim-snipmate'
 Bundle 'Townk/vim-autoclose'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'bbommarito/vim-slim'
+Bundle 'digitaltoad/vim-jade'
+Bundle 'pangloss/vim-javascript'
+Bundle 'briancollins/vim-jst'
 
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
@@ -29,6 +32,8 @@ Bundle 'vim-scripts/VIM-Color-Picker'
 colo railscasts                   " Theme
 set number                        " Numers of lines
 set expandtab ts=2 sw=2 ai        " Two spaces insted tab
+"set tabstop=4
+
 set showtabline=2                 " Always shows tabs on top
 set backspace=indent,eol,start    " Intuitive backspacing.
 set incsearch                     " Highlight matches as you type.
@@ -44,13 +49,20 @@ set novisualbell
 set list
 set listchars=trail:•             " Show spaces in end of line
 filetype plugin on                " Turn on file type detection.
-filetype indent on                " Turn on file ident detection.
+filetype indent on                " Turn on file indent detection.
 
 autocmd BufWritePre *.* :%s/\s\+$//e
 :map <C-s> :w<cr>
 :imap <C-s> <ESC>:w<cr>
 nnoremap <esc> :noh<return><esc>
 :map <C-a> <esc>ggVG<end>
+vnoremap < <gv
+vnoremap > >gv
+
+" run rspec file
+autocmd Filetype,BufNewFile *_spec.rb nmap <Leader>r :!bundle exec rspec %<CR>
+" run current rspec test
+autocmd Filetype,BufNewFile *_spec.rb nmap <Leader>R :exe "!bundle exec rspec %\:" . line(".")<cr>
 
 " Tabs
 :nmap <C-S-tab> :tabprevious<cr>
