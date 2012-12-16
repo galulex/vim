@@ -12,7 +12,6 @@ Bundle 'garbas/vim-snipmate'
 Bundle 'Townk/vim-autoclose'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'bbommarito/vim-slim'
-Bundle 'digitaltoad/vim-jade'
 Bundle 'pangloss/vim-javascript'
 Bundle 'briancollins/vim-jst'
 
@@ -22,6 +21,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-ragtag'
+Bundle 'tpope/vim-haml'
 
 Bundle 'tabpage.vim'
 Bundle 'Tab-Menu'
@@ -29,6 +29,7 @@ Bundle 'grep.vim'
 Bundle 'VIM-Color-Picker'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
+Bundle 'Toggle'
 
 " Vim
 colo railscasts                   " Theme
@@ -52,36 +53,32 @@ filetype plugin on                " Turn on file type detection.
 filetype indent on                " Turn on file indent detection.
 
 autocmd BufWritePre *.* :%s/\s\+$//e
-:map <C-s> :w<cr>
-:imap <C-s> <ESC>:w<cr>
+map <C-s> :w<cr>
+imap <C-s> <ESC>:w<cr>
 nnoremap <esc> :noh<return><esc>
-:map <C-a> <esc>ggVG<end>
+map <C-a> <esc>ggVG<end>
 vnoremap < <gv
 vnoremap > >gv
 
-" run rspec file
-autocmd Filetype,BufNewFile *_spec.rb nmap <Leader>r :!bundle exec rspec %<CR>
-" run current rspec test
-autocmd Filetype,BufNewFile *_spec.rb nmap <Leader>R :exe "!bundle exec rspec %\:" . line(".")<cr>
-
 " Tabs
-:nmap <C-S-tab> :tabprevious<cr>
-:nmap <C-tab> :tabnext<cr>
-:nmap <C-t> :tabnew<cr>
-:map <C-t> :tabnew<cr>
-:map <C-S-tab> :tabprevious<cr>
-:map <C-tab> :tabnext<cr>
-:map <tc> :tabclose<cr>
-:imap <C-S-tab> <ESC>:tabprevious<cr>i
-:imap <C-tab> <ESC>:tabnext<cr>i
-:imap <C-t> <ESC>:tabnew<cr>
-:map <C-e> <ESC>:q!<cr>
+nmap <C-S-tab> :tabprevious<cr>
+nmap <C-tab> :tabnext<cr>
+nmap <C-t> :tabnew<cr>
+map <C-t> :tabnew<cr>
+map <C-S-tab> :tabprevious<cr>
+map <C-tab> :tabnext<cr>
+map <tc> :tabclose<cr>
+imap <C-S-tab> <ESC>:tabprevious<cr>i
+imap <C-tab> <ESC>:tabnext<cr>i
+imap <C-t> <ESC>:tabnew<cr>
+map <C-e> <ESC>:q!<cr>
+imap <C-T> <C-O>:tabnew<CR>
 
 " Rgrep
-:map <C-f> :Rgrep<cr>
-:let Grep_Default_Filelist = '*.*'
-:let Grep_Skip_Files = '*.log *.sql'
-:let Grep_Skip_Dirs = 'tmp system public coverage log solr'
+map <C-f> :Rgrep<cr>
+let Grep_Default_Filelist = '*.*'
+let Grep_Skip_Files = '*.log *.sql'
+let Grep_Skip_Dirs = 'tmp system public coverage log solr'
 
 " Syntastic
 let g:syntastic_enable_signs=1
@@ -90,20 +87,20 @@ let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 
 " FuzzyFinder
-let g:fuzzy_ignore = "*.png;*.jpeg;*.jpg;*.gif;*.log;public/**/*;log/**/*;coverage/**/*;tmp/**/*;.git/**/*;.sass-cache/**/*;"
+let g:fuf_file_exclude =  '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
 let g:fuf_enumeratingLimit = 30
-:map <A-S-o> :FufCoverageFile<cr>
+map <A-S-o> :FufCoverageFile<CR>
 nnoremap <silent> <tab> :FufBuffer<CR>
 
 " NerdCommenter
-:map <C-c> :call NERDComment(0,"toggle")<cr>
-:imap <C-c> :call NERDComment(0,"toggle")<cr>i
+map <C-c> :call NERDComment(0,"toggle")<CR>
 
 " Rails
-:map gv :Rview<cr>
-:map gc :Rcontroller<cr>
-:map gm :Rmodel<cr>
-:map gh :Rhelper<cr>
+map gv :Rview<CR>
+map gc :Rcontroller<CR>
+map gm :Rmodel<CR>
+map gh :Rhelper<CR>
 
 " to start vim maximized
 function Maximize_Window()
