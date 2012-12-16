@@ -23,17 +23,17 @@ Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-ragtag'
 
-Bundle 'vim-scripts/tabpage.vim'
-Bundle 'vim-scripts/Tab-Menu'
-Bundle 'vim-scripts/grep.vim'
-Bundle 'vim-scripts/VIM-Color-Picker'
+Bundle 'tabpage.vim'
+Bundle 'Tab-Menu'
+Bundle 'grep.vim'
+Bundle 'VIM-Color-Picker'
+Bundle 'L9'
+Bundle 'FuzzyFinder'
 
 " Vim
 colo railscasts                   " Theme
 set number                        " Numers of lines
 set expandtab ts=2 sw=2 ai        " Two spaces insted tab
-"set tabstop=4
-
 set showtabline=2                 " Always shows tabs on top
 set backspace=indent,eol,start    " Intuitive backspacing.
 set incsearch                     " Highlight matches as you type.
@@ -91,10 +91,9 @@ let g:syntastic_warning_symbol='⚠'
 
 " FuzzyFinder
 let g:fuzzy_ignore = "*.png;*.jpeg;*.jpg;*.gif;*.log;public/**/*;log/**/*;coverage/**/*;tmp/**/*;.git/**/*;.sass-cache/**/*;"
-let g:fuzzy_matching_limit = 10
-:map <A-S-o> :FuzzyFinderTextMate<cr>
-:map <F5> :ruby finder.rescan!<cr> " fuzzyfinder refresh
-nnoremap <silent> <tab> :FuzzyFinderBuffer<CR>
+let g:fuf_enumeratingLimit = 30
+:map <A-S-o> :FufCoverageFile<cr>
+nnoremap <silent> <tab> :FufBuffer<CR>
 
 " NerdCommenter
 :map <C-c> :call NERDComment(0,"toggle")<cr>
