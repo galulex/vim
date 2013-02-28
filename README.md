@@ -6,3 +6,5 @@
      sudo apt-get install ctags wmctrl
 
 Open vim and run next command: `BundleInstall`
+
+[![endorse](http://api.coderwall.com/galulex/endorsecount.png)](http://coderwall.com/galulex)
