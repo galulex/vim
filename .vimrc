@@ -30,6 +30,7 @@ Bundle 'VIM-Color-Picker'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle 'Toggle'
+Bundle 'rubycomplete.vim'
 
 " Vim
 colo railscasts                   " Theme
@@ -77,8 +78,8 @@ imap <C-T> <C-O>:tabnew<CR>
 " Rgrep
 map <C-f> :Rgrep<cr>
 let Grep_Default_Filelist = '*.*'
-let Grep_Skip_Files = '*.log *.sql'
-let Grep_Skip_Dirs = 'tmp system public coverage log solr'
+let Grep_Skip_Files = '*.log *.sql *.png *.jpg *.jpeg *.gif'
+let Grep_Skip_Dirs = 'tmp system coverage log solr'
 
 " Syntastic
 let g:syntastic_enable_signs=1
@@ -92,6 +93,7 @@ let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp)$|(^
 let g:fuf_enumeratingLimit = 30
 map <A-S-o> :FufCoverageFile<CR>
 nnoremap <silent> <tab> :FufBuffer<CR>
+map <F5> :FufRenewCache<cr>
 
 " NerdCommenter
 map <C-c> :call NERDComment(0,"toggle")<CR>
@@ -101,6 +103,14 @@ map gv :Rview<CR>
 map gc :Rcontroller<CR>
 map gm :Rmodel<CR>
 map gh :Rhelper<CR>
+
+" ruby
+autocmd FileType ruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby let g:rubycomplete_rails = 1
+autocmd FileType ruby let g:rubycomplete_classes_in_global = 1
+"improve autocomplete menu color
+"highlight Pmenu ctermbg=238 gui=bold
 
 " to start vim maximized
 function Maximize_Window()
