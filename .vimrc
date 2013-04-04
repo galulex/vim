@@ -11,7 +11,7 @@ Bundle 'honza/snipmate-snippets'
 Bundle 'garbas/vim-snipmate'
 Bundle 'Townk/vim-autoclose'
 Bundle 'kchmck/vim-coffee-script'
-Bundle 'bbommarito/vim-slim'
+Bundle 'slim-template/vim-slim'
 Bundle 'pangloss/vim-javascript'
 Bundle 'briancollins/vim-jst'
 
@@ -79,7 +79,7 @@ imap <C-T> <C-O>:tabnew<CR>
 map <C-f> :Rgrep<cr>
 let Grep_Default_Filelist = '*.*'
 let Grep_Skip_Files = '*.log *.sql *.png *.jpg *.jpeg *.gif'
-let Grep_Skip_Dirs = 'tmp system coverage log solr'
+let Grep_Skip_Dirs = 'tmp system coverage log solr public'
 
 " Syntastic
 let g:syntastic_enable_signs=1
