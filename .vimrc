@@ -103,6 +103,8 @@ map gv :Rview<CR>
 map gc :Rcontroller<CR>
 map gm :Rmodel<CR>
 map gh :Rhelper<CR>
+map gj :Rjavascript<CR>
+map gs :Rstylesheet<CR>
 
 " ruby
 autocmd FileType ruby set omnifunc=rubycomplete#Complete
