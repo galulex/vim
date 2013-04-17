@@ -31,6 +31,7 @@ Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle 'Toggle'
 Bundle 'rubycomplete.vim'
+Bundle 'surround.vim'
 
 " Vim
 colo railscasts                   " Theme
