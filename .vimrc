@@ -12,6 +12,7 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'slim-template/vim-slim'
 Bundle 'pangloss/vim-javascript'
 Bundle 'briancollins/vim-jst'
+Bundle 'jiangmiao/auto-pairs'
 
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
