@@ -5,11 +5,9 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Plugins
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'honza/snipmate-snippets'
-Bundle 'garbas/vim-snipmate'
-Bundle 'Townk/vim-autoclose'
+"Bundle 'MarcWeber/vim-addon-mw-utils'
+"Bundle 'tomtom/tlib_vim'
+"Bundle 'Townk/vim-autoclose'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'slim-template/vim-slim'
 Bundle 'pangloss/vim-javascript'
@@ -17,14 +15,15 @@ Bundle 'briancollins/vim-jst'
 
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/snipmate-snippets'
 
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-haml'
+Bundle 'tpope/vim-obsession'
 
 Bundle 'tabpage.vim'
-Bundle 'Tab-Menu'
 Bundle 'grep.vim'
 Bundle 'VIM-Color-Picker'
 Bundle 'L9'
