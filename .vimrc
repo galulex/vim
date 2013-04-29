@@ -5,9 +5,6 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Plugins
-"Bundle 'MarcWeber/vim-addon-mw-utils'
-"Bundle 'tomtom/tlib_vim'
-"Bundle 'Townk/vim-autoclose'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'slim-template/vim-slim'
 Bundle 'pangloss/vim-javascript'
@@ -22,7 +19,6 @@ Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-haml'
-Bundle 'tpope/vim-obsession'
 
 Bundle 'tabpage.vim'
 Bundle 'grep.vim'
