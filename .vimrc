@@ -57,6 +57,7 @@ nnoremap <esc> :noh<return><esc>
 map <C-a> <esc>ggVG<end>
 vnoremap < <gv
 vnoremap > >gv
+cmap w!! %!sudo tee > /dev/null %
 
 " Tabs
 nmap <C-S-tab> :tabprevious<cr>
