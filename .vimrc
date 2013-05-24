@@ -47,10 +47,12 @@ set nohidden                      " Remove the buffer after tab close
 set novisualbell
 set list
 set listchars=trail:•             " Show spaces in end of line
+set autoread                      " Update open files when changed externally
 filetype plugin on                " Turn on file type detection.
 filetype indent on                " Turn on file indent detection.
 
 autocmd BufWritePre *.* :%s/\s\+$//e
+autocmd BufWritePre {*.rb,*.js,*.coffee,*.scss,*.haml,*.slim,*.erb} :%s/\s\+$//e
 map <C-s> :w<cr>
 imap <C-s> <ESC>:w<cr>
 nnoremap <esc> :noh<return><esc>
@@ -58,6 +60,7 @@ map <C-a> <esc>ggVG<end>
 vnoremap < <gv
 vnoremap > >gv
 cmap w!! %!sudo tee > /dev/null %
+let g:netrw_liststyle=3
 
 " Tabs
 nmap <C-S-tab> :tabprevious<cr>
@@ -117,3 +120,8 @@ function Maximize_Window()
   silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
 endfunction
 au GUIEnter * call Maximize_Window()
+
+if exists("+undofile")
+    set udf
+    set undodir=~/.vim/undo
+endif
