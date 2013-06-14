@@ -10,6 +10,7 @@ Bundle 'slim-template/vim-slim'
 Bundle 'pangloss/vim-javascript'
 Bundle 'briancollins/vim-jst'
 Bundle 'jiangmiao/auto-pairs'
+Bundle 'avakhov/vim-yaml'
 
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
@@ -28,6 +29,7 @@ Bundle 'FuzzyFinder'
 Bundle 'Toggle'
 Bundle 'rubycomplete.vim'
 Bundle 'surround.vim'
+Bundle 'yaml.vim'
 
 " Vim
 colo railscasts                   " Theme
