@@ -50,12 +50,14 @@ set novisualbell
 set list
 set listchars=trail:•             " Show spaces in end of line
 set autoread                      " Update open files when changed externally
+set relativenumber                " Set relative line numbers
 filetype plugin on                " Turn on file type detection.
 filetype indent on                " Turn on file indent detection.
 
 autocmd BufWritePre *.* :%s/\s\+$//e
 autocmd BufWritePre {*.rb,*.js,*.coffee,*.scss,*.haml,*.slim,*.erb} :%s/\s\+$//e
 map <C-s> :w<cr>
+map <S-r> :%s/:\(\w\+\)\(\s*=>\s*\)/\1: /g<cr>
 imap <C-s> <ESC>:w<cr>
 nnoremap <esc> :noh<return><esc>
 map <C-a> <esc>ggVG<end>
