@@ -11,6 +11,8 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'briancollins/vim-jst'
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'avakhov/vim-yaml'
+Bundle 'greyblake/vim-preview'
+Bundle 'bling/vim-airline'
 
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
@@ -21,7 +23,7 @@ Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-haml'
 
-Bundle 'tabpage.vim'
+"Bundle 'tabpage.vim'
 Bundle 'grep.vim'
 Bundle 'VIM-Color-Picker'
 Bundle 'L9'
@@ -51,6 +53,7 @@ set list
 set listchars=trail:•             " Show spaces in end of line
 set autoread                      " Update open files when changed externally
 set relativenumber                " Set relative line numbers
+set laststatus=2
 filetype plugin on                " Turn on file type detection.
 filetype indent on                " Turn on file indent detection.
 
@@ -64,7 +67,17 @@ map <C-a> <esc>ggVG<end>
 vnoremap < <gv
 vnoremap > >gv
 cmap w!! %!sudo tee > /dev/null %
-let g:netrw_liststyle=3
+autocmd! bufwritepost .vimrc nested source %
+
+" Bubble single&multiple lines
+vnoremap <C-Up> <esc>`>gv:m '>+1<cr>gv
+vnoremap <C-Down> <esc>`<gv:m '<-2<cr>gv
+nnoremap <C-Up> mz:m-2<cr>`z
+nnoremap <C-Down> mz:m+<cr>`z
+
+" easy indent/outdent
+nnoremap < <<
+nnoremap > >>
 
 " Tabs
 nmap <C-S-tab> :tabprevious<cr>
