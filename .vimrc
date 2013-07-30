@@ -54,6 +54,7 @@ set listchars=trail:•             " Show spaces in end of line
 set autoread                      " Update open files when changed externally
 set relativenumber                " Set relative line numbers
 set laststatus=2
+set noballooneval
 filetype plugin on                " Turn on file type detection.
 filetype indent on                " Turn on file indent detection.
 
@@ -74,10 +75,6 @@ vnoremap <C-Up> <esc>`>gv:m '>+1<cr>gv
 vnoremap <C-Down> <esc>`<gv:m '<-2<cr>gv
 nnoremap <C-Up> mz:m-2<cr>`z
 nnoremap <C-Down> mz:m+<cr>`z
-
-" easy indent/outdent
-nnoremap < <<
-nnoremap > >>
 
 " Tabs
 nmap <C-S-tab> :tabprevious<cr>
