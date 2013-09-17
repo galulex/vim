@@ -77,18 +77,14 @@ nnoremap <C-Up> mz:m-2<cr>`z
 nnoremap <C-Down> mz:m+<cr>`z
 
 " Tabs
-nmap <C-S-tab> :tabprevious<cr>
-nmap <C-tab> :tabnext<cr>
-nmap <C-t> :tabnew<cr>
-map <C-t> :tabnew<cr>
-map <C-S-tab> :tabprevious<cr>
-map <C-tab> :tabnext<cr>
-map <tc> :tabclose<cr>
-imap <C-S-tab> <ESC>:tabprevious<cr>i
-imap <C-tab> <ESC>:tabnext<cr>i
-imap <C-t> <ESC>:tabnew<cr>
-map <C-e> <ESC>:q!<cr>
-imap <C-T> <C-O>:tabnew<CR>
+nnoremap <C-S-tab> :tabprevious<CR>
+nnoremap <C-tab>   :tabnext<CR>
+nnoremap <C-t>     :tabnew<CR>
+nnoremap <C-e>     :q!<CR>
+inoremap <C-S-tab> <Esc>:tabprevious<CR>i
+inoremap <C-tab>   <Esc>:tabnext<CR>i
+inoremap <C-t>     <Esc>:tabnew<CR>
+inoremap <C-e>     <Esc>:q!<CR>i
 
 " Rgrep
 map <C-f> :Rgrep<cr>
