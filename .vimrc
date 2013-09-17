@@ -63,7 +63,6 @@ autocmd BufWritePre {*.rb,*.js,*.coffee,*.scss,*.haml,*.slim,*.erb} :%s/\s\+$//e
 map <C-s> :w<cr>
 map <S-r> :%s/:\(\w\+\)\(\s*=>\s*\)/\1: /g<cr>
 imap <C-s> <ESC>:w<cr>
-nnoremap <esc> :noh<return><esc>
 map <C-a> <esc>ggVG<end>
 vnoremap < <gv
 vnoremap > >gv
