@@ -35,7 +35,6 @@ Bundle 'yaml.vim'
 
 " Vim
 colo railscasts                   " Theme
-set number                        " Numers of lines
 set expandtab ts=2 sw=2 ai        " Two spaces insted tab
 set showtabline=2                 " Always shows tabs on top
 set backspace=indent,eol,start    " Intuitive backspacing.
