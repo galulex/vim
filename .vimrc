@@ -33,6 +33,7 @@ Bundle 'Toggle'
 Bundle 'rubycomplete.vim'
 Bundle 'surround.vim'
 Bundle 'yaml.vim'
+Bundle 'rainbow-end'
 
 " Vim
 colo railscasts                   " Theme
