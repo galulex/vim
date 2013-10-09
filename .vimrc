@@ -9,13 +9,11 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'slim-template/vim-slim'
 Bundle 'pangloss/vim-javascript'
 Bundle 'briancollins/vim-jst'
-"Bundle 'jiangmiao/auto-pairs'
 Bundle 'avakhov/vim-yaml'
 Bundle 'greyblake/vim-preview'
 Bundle 'bling/vim-airline'
 Bundle 'Raimondi/delimitMate'
 
-Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/snipmate-snippets'
 
@@ -23,14 +21,13 @@ Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-haml'
+Bundle 'tpope/vim-commentary'
 
-"Bundle 'tabpage.vim'
 Bundle 'grep.vim'
 Bundle 'VIM-Color-Picker'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle 'Toggle'
-"Bundle 'rubycomplete.vim'
 Bundle 'surround.vim'
 Bundle 'yaml.vim'
 Bundle 'rainbow-end'
@@ -106,16 +103,18 @@ map <A-S-o> :FufCoverageFile<CR>
 nnoremap <silent> <tab> :FufBuffer<CR>
 map <F5> :FufRenewCache<cr>
 
-" NerdCommenter
-map <C-c> :call NERDComment(0,"toggle")<CR>
+" Commentary
+map <C-c> <esc>gcc<end>
+map <C-x> <esc>gcu<end>
+vmap <C-c> gc
 
 " Rails
-map gv :Rview<CR>
-map gc :Rcontroller<CR>
-map gm :Rmodel<CR>
-map gh :Rhelper<CR>
-map gj :Rjavascript<CR>
-map gs :Rstylesheet<CR>
+map gV :Rview<CR>
+map gC :Rcontroller<CR>
+map gM :Rmodel<CR>
+map gH :Rhelper<CR>
+map gJ :Rjavascript<CR>
+map gS :Rstylesheet<CR>
 
 " to start vim maximized
 function Maximize_Window()
