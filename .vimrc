@@ -30,7 +30,7 @@ Bundle 'VIM-Color-Picker'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle 'Toggle'
-Bundle 'rubycomplete.vim'
+"Bundle 'rubycomplete.vim'
 Bundle 'surround.vim'
 Bundle 'yaml.vim'
 Bundle 'rainbow-end'
@@ -116,14 +116,6 @@ map gm :Rmodel<CR>
 map gh :Rhelper<CR>
 map gj :Rjavascript<CR>
 map gs :Rstylesheet<CR>
-
-" ruby
-autocmd FileType ruby set omnifunc=rubycomplete#Complete
-autocmd FileType ruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby let g:rubycomplete_rails = 1
-autocmd FileType ruby let g:rubycomplete_classes_in_global = 1
-"improve autocomplete menu color
-"highlight Pmenu ctermbg=238 gui=bold
 
 " to start vim maximized
 function Maximize_Window()
