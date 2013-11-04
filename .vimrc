@@ -68,8 +68,8 @@ cmap w!! %!sudo tee > /dev/null %
 autocmd! bufwritepost .vimrc nested source %
 
 " Bubble single&multiple lines
-vnoremap <C-Up> <esc>`>gv:m '>+1<cr>gv
-vnoremap <C-Down> <esc>`<gv:m '<-2<cr>gv
+vnoremap <C-Up> <esc>`<gv:m '<-2<cr>gv
+vnoremap <C-Down> <esc>`>gv:m '>+1<cr>gv
 nnoremap <C-Up> mz:m-2<cr>`z
 nnoremap <C-Down> mz:m+<cr>`z
 
