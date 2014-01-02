@@ -104,8 +104,8 @@ let Grep_Skip_Dirs = 'tmp system coverage log solr public'
 " let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 " FuzzyFinder
-let g:fuf_file_exclude =  '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+let g:fuf_file_exclude =  '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
 let g:fuf_enumeratingLimit = 30
 map <A-S-o> :FufCoverageFile<CR>
 nnoremap <silent> <tab> :FufBuffer<CR>
