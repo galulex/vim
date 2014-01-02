@@ -14,8 +14,13 @@ Bundle 'greyblake/vim-preview'
 Bundle 'bling/vim-airline'
 Bundle 'Raimondi/delimitMate'
 
-Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/snipmate-snippets'
+" Bundle 'scrooloose/syntastic'
+"
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
+Bundle 'honza/vim-snippets'
+" Bundle 'scrooloose/snipmate-snippets'
 
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
@@ -56,8 +61,8 @@ set laststatus=2
 filetype plugin on                " Turn on file type detection.
 filetype indent on                " Turn on file indent detection.
 
-autocmd BufWritePre *.* :%s/\s\+$//e
-autocmd BufWritePre {*.rb,*.js,*.coffee,*.scss,*.haml,*.slim,*.erb} :%s/\s\+$//e
+" autocmd BufWritePre *.* :%s/\s\+$//e
+autocmd BufWritePre {*.rb,*.js,*.coffee,*.scss,*.haml,*.slim,*.erb,*.css,*.html} :%s/\s\+$//e
 map <C-s> :w<cr>
 map <S-r> :%s/:\(\w\+\)\(\s*=>\s*\)/\1: /g<cr>
 imap <C-s> <ESC>:w<cr>
@@ -66,6 +71,7 @@ vnoremap < <gv
 vnoremap > >gv
 cmap w!! %!sudo tee > /dev/null %
 autocmd! bufwritepost .vimrc nested source %
+inoremap <c-x><c-]> <c-]>
 
 " Bubble single&multiple lines
 vnoremap <C-Up> <esc>`<gv:m '<-2<cr>gv
@@ -90,10 +96,12 @@ let Grep_Skip_Files = '*.log *.sql *.png *.jpg *.jpeg *.gif'
 let Grep_Skip_Dirs = 'tmp system coverage log solr public'
 
 " Syntastic
-let g:syntastic_enable_signs=1
-let g:syntastic_quiet_warnings=1
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
+" let g:syntastic_enable_signs=1
+" let g:syntastic_quiet_warnings=0
+" let g:syntastic_error_symbol='✗'
+" let g:syntastic_warning_symbol='⚠'
+" let g:syntastic_enable_highlighting=0
+" let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 " FuzzyFinder
 let g:fuf_file_exclude =  '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
