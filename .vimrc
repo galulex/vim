@@ -60,7 +60,14 @@ set listchars=trail:•             " Show spaces in end of line
 set autoread                      " Update open files when changed externally
 set relativenumber                " Set relative line numbers
 set laststatus=2
-"set noballooneval
+set re=1
+set ttyfast
+set lazyredraw
+set nocursorcolumn
+set nocursorline
+syntax sync minlines=256
+" set clipboard=unnamed
+" set noballooneval
 filetype plugin on                " Turn on file type detection.
 filetype indent on                " Turn on file indent detection.
 
@@ -96,7 +103,7 @@ inoremap <C-e>     <Esc>:q!<CR>i
 map <C-f> :Rgrep<cr>
 let Grep_Default_Filelist = '*.*'
 let Grep_Skip_Files = '*.log *.sql *.png *.jpg *.jpeg *.gif'
-let Grep_Skip_Dirs = 'tmp system coverage log solr public'
+let Grep_Skip_Dirs = '.git tmp system coverage log solr public'
 
 " Syntastic
 " let g:syntastic_enable_signs=1
@@ -107,8 +114,8 @@ let Grep_Skip_Dirs = 'tmp system coverage log solr public'
 " let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 " FuzzyFinder
-let g:fuf_file_exclude =  '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])_site[/\\]|(^|[/\\])tmp[/\\]'
+let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])_site[/\\]|(^|[/\\])tmp[/\\]'
 let g:fuf_enumeratingLimit = 30
 map <A-S-o> :FufCoverageFile<CR>
 nnoremap <silent> <tab> :FufBuffer<CR>
