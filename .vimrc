@@ -30,6 +30,7 @@ Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-fugitive'
 
+Bundle 'vtreeexplorer'
 Bundle 'grep.vim'
 Bundle 'VIM-Color-Picker'
 Bundle 'LargeFile'
@@ -66,6 +67,7 @@ set lazyredraw
 set nocursorcolumn
 set nocursorline
 syntax sync minlines=256
+set synmaxcol=160
 " set clipboard=unnamed
 " set noballooneval
 filetype plugin on                " Turn on file type detection.
@@ -98,6 +100,11 @@ inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 inoremap <C-tab>   <Esc>:tabnext<CR>i
 inoremap <C-t>     <Esc>:tabnew<CR>
 inoremap <C-e>     <Esc>:q!<CR>i
+
+"VSTreeExplorer
+let treeExplVertical=1
+let treeExplWinSize=40
+command E VSTreeExplore
 
 " Rgrep
 map <C-f> :Rgrep<cr>
