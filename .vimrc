@@ -103,6 +103,7 @@ inoremap <C-e>     <Esc>:q!<CR>i
 
 "VSTreeExplorer
 let treeExplVertical=1
+let treeExplDirSort=1
 let treeExplWinSize=40
 command E VSTreeExplore
 
