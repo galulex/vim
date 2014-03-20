@@ -19,9 +19,7 @@ Bundle 'Raimondi/delimitMate'
 "
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
-Bundle 'garbas/vim-snipmate'
-Bundle 'honza/vim-snippets'
-" Bundle 'scrooloose/snipmate-snippets'
+Bundle 'activebridge/rails-snippets'
 
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
@@ -73,8 +71,8 @@ set synmaxcol=160
 filetype plugin on                " Turn on file type detection.
 filetype indent on                " Turn on file indent detection.
 
-" autocmd BufWritePre *.* :%s/\s\+$//e
-autocmd BufWritePre {*.rb,*.js,*.coffee,*.scss,*.haml,*.slim,*.erb,*.css,*.html} :%s/\s\+$//e
+autocmd BufWritePre *.* :%s/\s\+$//e
+" autocmd BufWritePre {*.rb,*.js,*.coffee,*.scss,*.haml,*.slim,*.erb,*.css,*.html,*.yml} :%s/\s\+$//e
 map <C-s> :w<cr>
 map <S-r> :%s/:\(\w\+\)\(\s*=>\s*\)/\1: /g<cr>
 imap <C-s> <ESC>:w<cr>
@@ -126,7 +124,7 @@ let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg)$|(^
 let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])_site[/\\]|(^|[/\\])tmp[/\\]'
 let g:fuf_enumeratingLimit = 30
 map <A-S-o> :FufCoverageFile<CR>
-nnoremap <silent> <tab> :FufBuffer<CR>
+nnoremap <silent> <S-tab> :FufBuffer<CR>
 map <F5> :FufRenewCache<cr>
 
 " Commentary
