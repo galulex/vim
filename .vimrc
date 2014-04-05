@@ -20,6 +20,7 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
 Bundle 'activebridge/rails-snippets'
+Bundle 'p0deje/vim-ruby-interpolation'
 
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
