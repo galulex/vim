@@ -13,6 +13,8 @@ Bundle 'avakhov/vim-yaml'
 Bundle 'greyblake/vim-preview'
 Bundle 'bling/vim-airline'
 Bundle 'Raimondi/delimitMate'
+Bundle 'hail2u/vim-css3-syntax'
+" Bundle 'Shougo/unite.vim'
 " Bundle 'airblade/vim-gitgutter'
 
 " Bundle 'scrooloose/syntastic'
@@ -113,16 +115,16 @@ let Grep_Skip_Files = '*.log *.sql *.png *.jpg *.jpeg *.gif'
 let Grep_Skip_Dirs = '.git tmp system coverage log solr public'
 
 " Syntastic
-" let g:syntastic_enable_signs=1
-" let g:syntastic_quiet_warnings=0
-" let g:syntastic_error_symbol='✗'
-" let g:syntastic_warning_symbol='⚠'
-" let g:syntastic_enable_highlighting=0
+let g:syntastic_enable_signs=1
+let g:syntastic_quiet_warnings=0
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_enable_highlighting=0
 " let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 " FuzzyFinder
-let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])_site[/\\]|(^|[/\\])tmp[/\\]'
-let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])_site[/\\]|(^|[/\\])tmp[/\\]'
+let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(_site|tmp|vendor)[/\\]|(^|[/\\])tmp[/\\]vendor[/\\]'
+let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(_site|tmp|vendor)[/\\]|(^|[/\\])tmp[/\\]vendor[/\\]'
 let g:fuf_enumeratingLimit = 30
 map <A-S-o> :FufCoverageFile<CR>
 nnoremap <silent> <S-tab> :FufBuffer<CR>
