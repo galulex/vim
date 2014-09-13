@@ -1,46 +1,46 @@
-filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call plug#begin('~/.vim/plugged')
 
-Bundle 'gmarik/vundle'
+Plug 'gmarik/vundle'
 
 " Plugins
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'slim-template/vim-slim'
-Bundle 'pangloss/vim-javascript'
-Bundle 'briancollins/vim-jst'
-Bundle 'avakhov/vim-yaml'
-Bundle 'greyblake/vim-preview'
-Bundle 'bling/vim-airline'
-Bundle 'Raimondi/delimitMate'
-Bundle 'hail2u/vim-css3-syntax'
-" Bundle 'Shougo/unite.vim'
-" Bundle 'airblade/vim-gitgutter'
+Plug 'kchmck/vim-coffee-script'
+Plug 'slim-template/vim-slim'
+Plug 'pangloss/vim-javascript'
+Plug 'briancollins/vim-jst'
+Plug 'avakhov/vim-yaml'
+Plug 'greyblake/vim-preview'
+Plug 'bling/vim-airline'
+Plug 'Raimondi/delimitMate'
+Plug 'hail2u/vim-css3-syntax'
+" Plug 'Shougo/unite.vim'
+" Plug 'airblade/vim-gitgutter'
 
-" Bundle 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
 "
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'activebridge/rails-snippets'
-Bundle 'p0deje/vim-ruby-interpolation'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'activebridge/rails-snippets'
+Plug 'p0deje/vim-ruby-interpolation'
 
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-ragtag'
-Bundle 'tpope/vim-haml'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-haml'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
 
-Bundle 'vtreeexplorer'
-Bundle 'grep.vim'
-Bundle 'VIM-Color-Picker'
-Bundle 'LargeFile'
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle 'Toggle'
-Bundle 'surround.vim'
-Bundle 'yaml.vim'
-Bundle 'rainbow-end'
+Plug 'vtreeexplorer'
+Plug 'grep.vim'
+Plug 'VIM-Color-Picker'
+Plug 'LargeFile'
+Plug 'L9'
+Plug 'FuzzyFinder'
+Plug 'Toggle'
+Plug 'surround.vim'
+Plug 'yaml.vim'
+Plug 'rainbow-end'
+
+call plug#end()
 
 " Vim
 colo railscasts                   " Theme
@@ -112,7 +112,7 @@ command E VSTreeExplore
 map <C-f> :Rgrep<cr>
 let Grep_Default_Filelist = '*.*'
 let Grep_Skip_Files = '*.log *.sql *.png *.jpg *.jpeg *.gif'
-let Grep_Skip_Dirs = '.git tmp system coverage log solr public'
+let Grep_Skip_Dirs = '.git tmp system coverage log solr public _site'
 
 " Syntastic
 let g:syntastic_enable_signs=1
