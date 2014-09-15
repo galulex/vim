@@ -21,6 +21,7 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'activebridge/rails-snippets'
 Plug 'p0deje/vim-ruby-interpolation'
+Plug 'svermeulen/vim-easyclip'
 
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
