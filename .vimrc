@@ -15,7 +15,7 @@ Plug 'hail2u/vim-css3-syntax'
 " Plug 'Shougo/unite.vim'
 " Plug 'airblade/vim-gitgutter'
 
-" Plug 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 "
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -117,7 +117,7 @@ let Grep_Skip_Dirs = '.git tmp system coverage log solr public _site'
 
 " Syntastic
 let g:syntastic_enable_signs=1
-let g:syntastic_quiet_warnings=0
+" let g:syntastic_quiet_messages=0
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_enable_highlighting=0
