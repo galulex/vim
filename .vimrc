@@ -1,7 +1,5 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'gmarik/vundle'
-
 " Plugins
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
@@ -21,7 +19,7 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'activebridge/rails-snippets'
 Plug 'p0deje/vim-ruby-interpolation'
-Plug 'svermeulen/vim-easyclip'
+" Plug 'svermeulen/vim-easyclip'
 
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
@@ -84,7 +82,7 @@ map <C-a> <esc>ggVG<end>
 vnoremap < <gv
 vnoremap > >gv
 cmap w!! %!sudo tee > /dev/null %
-autocmd! bufwritepost .vimrc nested source %
+" autocmd! bufwritepost .vimrc nested source %
 inoremap <c-x><c-]> <c-]>
 
 " Bubble single&multiple lines
@@ -117,7 +115,6 @@ let Grep_Skip_Dirs = '.git tmp system coverage log solr public _site'
 
 " Syntastic
 let g:syntastic_enable_signs=1
-" let g:syntastic_quiet_messages=0
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_enable_highlighting=0
