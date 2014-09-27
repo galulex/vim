@@ -17,8 +17,11 @@ Plug 'scrooloose/syntastic'
 "
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
-Plug 'activebridge/rails-snippets'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
 Plug 'p0deje/vim-ruby-interpolation'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'ervandew/supertab'
 " Plug 'svermeulen/vim-easyclip'
 
 Plug 'tpope/vim-rails'

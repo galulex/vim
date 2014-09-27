@@ -84,7 +84,7 @@ let s:loaded = get(s:, 'loaded', {})
 
 function! plug#begin(...)
   if a:0 > 0
-    let home = s:path(fnamemodify(a:1, ':p'))
+    let home = s:path(fnamemodify(expand(a:1), ':p'))
   elseif exists('g:plug_home')
     let home = s:path(g:plug_home)
   elseif !empty(&rtp)
@@ -107,8 +107,8 @@ function! s:define_commands()
   if !executable('git')
     return s:err('`git` executable not found. vim-plug requires git.')
   endif
-  command! -nargs=* -bar -bang -complete=customlist,s:names PlugInstall call s:install('<bang>' == '!', <f-args>)
-  command! -nargs=* -bar -bang -complete=customlist,s:names PlugUpdate  call s:update('<bang>' == '!', <f-args>)
+  command! -nargs=* -bar -bang -complete=customlist,s:names PlugInstall call s:install('<bang>' == '!', [<f-args>])
+  command! -nargs=* -bar -bang -complete=customlist,s:names PlugUpdate  call s:update('<bang>' == '!', [<f-args>])
   command! -nargs=0 -bar -bang PlugClean call s:clean('<bang>' == '!')
   command! -nargs=0 -bar PlugUpgrade if s:upgrade() | execute 'source' s:me | endif
   command! -nargs=0 -bar PlugStatus  call s:status()
@@ -128,7 +128,6 @@ function! s:source(from, ...)
 endfunction
 
 function! plug#end()
-  let reload = !has('vim_starting')
   if !exists('g:plugs')
     return s:err('Call plug#begin() first')
   endif
@@ -142,17 +141,10 @@ function! plug#end()
   let lod = {}
 
   filetype off
-  " we want to make sure the plugin directories are added to rtp in the same
-  " order that they are registered with the Plug command. since the s:add_rtp
-  " function uses ^= to add plugin directories to the front of the rtp, we
-  " need to loop through the plugins in reverse
-  for name in reverse(copy(g:plugs_order))
+  for name in g:plugs_order
     let plug = g:plugs[name]
-    if get(s:loaded, plug.dir, 0) || !has_key(plug, 'on') && !has_key(plug, 'for')
-      let rtp = s:add_rtp(plug)
-      if reload
-        call s:source(rtp, 'plugin/**/*.vim', 'after/plugin/**/*.vim')
-      endif
+    if get(s:loaded, name, 0) || !has_key(plug, 'on') && !has_key(plug, 'for')
+      let s:loaded[name] = 1
       continue
     endif
 
@@ -192,12 +184,27 @@ function! plug#end()
   for [key, names] in items(lod)
     augroup PlugLOD
       execute printf('autocmd FileType %s call <SID>lod_ft(%s, %s)',
-            \ key, string(key), string(reverse(names)))
+            \ key, string(key), string(names))
     augroup END
   endfor
+
   call s:reorg_rtp()
   filetype plugin indent on
-  syntax enable
+  if has('vim_starting')
+    syntax enable
+  else
+    call s:reload()
+  endif
+endfunction
+
+function! s:loaded_names()
+  return filter(copy(g:plugs_order), 'get(s:loaded, v:val, 0)')
+endfunction
+
+function! s:reload()
+  for name in s:loaded_names()
+    call s:source(s:rtp(g:plugs[name]), 'plugin/**/*.vim', 'after/plugin/**/*.vim')
+  endfor
 endfunction
 
 function! s:trim(str)
@@ -246,27 +253,46 @@ function! s:err(msg)
 endfunction
 
 function! s:esc(path)
-  return substitute(a:path, ' ', '\\ ', 'g')
+  return escape(a:path, ' ')
 endfunction
 
-function! s:add_rtp(plug)
-  let rtp = s:rtp(a:plug)
-  execute 'set rtp^='.s:esc(rtp)
-  let after = globpath(rtp, 'after')
-  if isdirectory(after)
-    execute 'set rtp+='.s:esc(after)
-  endif
-  let s:loaded[a:plug.dir] = 1
-  return rtp
+function! s:escrtp(path)
+  return escape(a:path, ' ,')
+endfunction
+
+function! s:remove_rtp()
+  for name in s:loaded_names()
+    let rtp = s:rtp(g:plugs[name])
+    execute 'set rtp-='.s:escrtp(rtp)
+    let after = globpath(rtp, 'after')
+    if isdirectory(after)
+      execute 'set rtp-='.s:escrtp(after)
+    endif
+  endfor
 endfunction
 
 function! s:reorg_rtp()
   if !empty(s:first_rtp)
     execute 'set rtp-='.s:first_rtp
-    execute 'set rtp^='.s:first_rtp
-  endif
-  if s:last_rtp !=# s:first_rtp
     execute 'set rtp-='.s:last_rtp
+  endif
+
+  " &rtp is modified from outside
+  if exists('s:prtp') && s:prtp !=# &rtp
+    call s:remove_rtp()
+    unlet! s:middle
+  endif
+
+  let s:middle = get(s:, 'middle', &rtp)
+  let rtps     = map(s:loaded_names(), 's:rtp(g:plugs[v:val])')
+  let afters   = filter(map(copy(rtps), 'globpath(v:val, "after")'), 'isdirectory(v:val)')
+  let &rtp     = join(map(rtps, 's:escrtp(v:val)'), ',')
+                 \ . substitute(','.s:middle.',', '^,,$', ',', '')
+                 \ . join(map(afters, 's:escrtp(v:val)'), ',')
+  let s:prtp   = &rtp
+
+  if !empty(s:first_rtp)
+    execute 'set rtp^='.s:first_rtp
     execute 'set rtp+='.s:last_rtp
   endif
 endfunction
@@ -284,25 +310,28 @@ function! plug#load(...)
     return s:err(printf('Unknown plugin%s: %s', s, join(unknowns, ', ')))
   end
   for name in a:000
-    call s:lod(g:plugs[name], ['ftdetect', 'after/ftdetect', 'plugin', 'after/plugin'])
+    call s:lod([name], ['ftdetect', 'after/ftdetect', 'plugin', 'after/plugin'])
   endfor
-  call s:reorg_rtp()
   silent! doautocmd BufRead
   return 1
 endfunction
 
-function! s:lod(plug, types)
-  let rtp = s:add_rtp(a:plug)
-  for dir in a:types
-    call s:source(rtp, dir.'/**/*.vim')
+function! s:lod(names, types)
+  for name in a:names
+    let s:loaded[name] = 1
+  endfor
+  call s:reorg_rtp()
+
+  for name in a:names
+    let rtp = s:rtp(g:plugs[name])
+    for dir in a:types
+      call s:source(rtp, dir.'/**/*.vim')
+    endfor
   endfor
 endfunction
 
 function! s:lod_ft(pat, names)
-  for name in a:names
-    call s:lod(g:plugs[name], ['plugin', 'after/plugin'])
-  endfor
-  call s:reorg_rtp()
+  call s:lod(a:names, ['plugin', 'after/plugin'])
   execute 'autocmd! PlugLOD FileType' a:pat
   silent! doautocmd filetypeplugin FileType
   silent! doautocmd filetypeindent FileType
@@ -310,16 +339,14 @@ endfunction
 
 function! s:lod_cmd(cmd, bang, l1, l2, args, name)
   execute 'delc' a:cmd
-  call s:lod(g:plugs[a:name], ['ftdetect', 'after/ftdetect', 'plugin', 'after/plugin'])
-  call s:reorg_rtp()
+  call s:lod([a:name], ['ftdetect', 'after/ftdetect', 'plugin', 'after/plugin'])
   execute printf('%s%s%s %s', (a:l1 == a:l2 ? '' : (a:l1.','.a:l2)), a:cmd, a:bang, a:args)
 endfunction
 
 function! s:lod_map(map, name, prefix)
   execute 'unmap' a:map
   execute 'iunmap' a:map
-  call s:lod(g:plugs[a:name], ['ftdetect', 'after/ftdetect', 'plugin', 'after/plugin'])
-  call s:reorg_rtp()
+  call s:lod([a:name], ['ftdetect', 'after/ftdetect', 'plugin', 'after/plugin'])
   let extra = ''
   while 1
     let c = getchar(0)
@@ -343,7 +370,7 @@ function! s:add(repo, ...)
                     \ a:0 == 1 ? s:parse_options(a:1) : s:base_spec)
     let g:plugs[name] = spec
     let g:plugs_order += [name]
-    let s:loaded[spec.dir] = 0
+    let s:loaded[name] = 0
   catch
     return s:err(v:exception)
   endtry
@@ -387,12 +414,12 @@ function! s:infer_properties(name, repo)
   endif
 endfunction
 
-function! s:install(force, ...)
-  call s:update_impl(0, a:force, a:000)
+function! s:install(force, names)
+  call s:update_impl(0, a:force, a:names)
 endfunction
 
-function! s:update(force, ...)
-  call s:update_impl(1, a:force, a:000)
+function! s:update(force, names)
+  call s:update_impl(1, a:force, a:names)
 endfunction
 
 function! plug#helptags()
@@ -476,10 +503,12 @@ function! s:prepare()
     silent %d _
   else
     call s:new_window()
-    nnoremap <silent> <buffer> q  :if b:plug_preview==1<bar>pc<bar>endif<bar>q<cr>
+    nnoremap <silent> <buffer> q  :if b:plug_preview==1<bar>pc<bar>endif<bar>echo<bar>q<cr>
     nnoremap <silent> <buffer> R  :silent! call <SID>retry()<cr>
     nnoremap <silent> <buffer> D  :PlugDiff<cr>
     nnoremap <silent> <buffer> S  :PlugStatus<cr>
+    nnoremap <silent> <buffer> U  :call <SID>status_update()<cr>
+    xnoremap <silent> <buffer> U  :call <SID>status_update()<cr>
     nnoremap <silent> <buffer> ]] :silent! call <SID>section('')<cr>
     nnoremap <silent> <buffer> [[ :silent! call <SID>section('b')<cr>
     let b:plug_preview = -1
@@ -624,9 +653,9 @@ function! s:update_impl(pull, force, args) abort
     catch
       let lines = getline(4, '$')
       let printed = {}
-      silent 4,$d
+      silent 4,$d _
       for line in lines
-        let name = get(matchlist(line, '^. \([^:]\+\):'), 1, '')
+        let name = matchstr(line, '^. \zs[^:]\+\ze:')
         if empty(name) || !has_key(printed, name)
           call append('$', line)
           if !empty(name)
@@ -723,7 +752,7 @@ function! s:update_parallel(pull, todo, threads)
 
   def killall pid
     pids = [pid]
-    unless `which pgrep`.empty?
+    unless `which pgrep 2> /dev/null`.empty?
       children = pids
       until children.empty?
         children = children.map { |pid|
@@ -789,7 +818,7 @@ function! s:update_parallel(pull, todo, threads)
       logh.call
     end
   }
-  bt = proc { |cmd, name, type|
+  bt = proc { |cmd, name, type, cleanup|
     tried = timeout = 0
     begin
       tried += 1
@@ -820,6 +849,7 @@ function! s:update_parallel(pull, todo, threads)
         killall fd.pid
         fd.close
       end
+      cleanup.call if cleanup
       if e.is_a?(Timeout::Error) && tried < tries
         3.downto(1) do |countdown|
           s = countdown > 1 ? 's' : ''
@@ -868,7 +898,7 @@ function! s:update_parallel(pull, todo, threads)
           ok, result =
             if exists
               dir = esc dir
-              ret, data = bt.call "#{cd} #{dir} && git rev-parse --abbrev-ref HEAD 2>&1 && git config remote.origin.url", nil, nil
+              ret, data = bt.call "#{cd} #{dir} && git rev-parse --abbrev-ref HEAD 2>&1 && git config remote.origin.url", nil, nil, nil
               current_uri = data.lines.to_a.last
               if !ret
                 if data =~ /^Interrupted|^Timeout/
@@ -883,7 +913,7 @@ function! s:update_parallel(pull, todo, threads)
               else
                 if pull
                   log.call name, 'Updating ...', :update
-                  bt.call "#{cd} #{dir} && git checkout -q #{branch} 2>&1 && (git pull --no-rebase origin #{branch} #{progress} 2>&1 && #{subm})", name, :update
+                  bt.call "#{cd} #{dir} && git checkout -q #{branch} 2>&1 && (git pull --no-rebase origin #{branch} #{progress} 2>&1 && #{subm})", name, :update, nil
                 else
                   [true, skip]
                 end
@@ -891,7 +921,9 @@ function! s:update_parallel(pull, todo, threads)
             else
               d = esc dir.sub(%r{[\\/]+$}, '')
               log.call name, 'Installing ...', :install
-              bt.call "(git clone #{progress} --recursive #{uri} -b #{branch} #{d} 2>&1 && cd #{esc dir} && #{subm})", name, :install
+              bt.call "(git clone #{progress} --recursive #{uri} -b #{branch} #{d} 2>&1 && cd #{esc dir} && #{subm})", name, :install, proc {
+                FileUtils.rm_rf dir
+              }
             end
           mtx.synchronize { VIM::command("let s:prev_update.new['#{name}'] = 1") } if !exists && ok
           log.call name, result, ok
@@ -983,10 +1015,9 @@ function! s:clean(force)
 
   " List of valid directories
   let dirs = []
-  let managed = filter(copy(g:plugs), 's:is_managed(v:key)')
-  let [cnt, total] = [0, len(managed)]
-  for spec in values(managed)
-    if s:git_valid(spec, 0, 1)[0]
+  let [cnt, total] = [0, len(g:plugs)]
+  for [name, spec] in items(g:plugs)
+    if !s:is_managed(name) || s:git_valid(spec, 0, 1)[0]
       call add(dirs, spec.dir)
     endif
     let cnt += 1
@@ -1104,7 +1135,7 @@ function! s:status()
     let cnt += 1
     let ecnt += !valid
     " `s:loaded` entry can be missing if PlugUpgraded
-    if valid && get(s:loaded, spec.dir, -1) == 0
+    if valid && get(s:loaded, name, -1) == 0
       let unloaded = 1
       let msg .= ' (not loaded)'
     endif
@@ -1117,21 +1148,33 @@ function! s:status()
   normal! gg
   setlocal nomodifiable
   if unloaded
-    echo "Press 'L' on each line to load plugin"
+    echo "Press 'L' on each line to load plugin, or 'U' to update"
     nnoremap <silent> <buffer> L :call <SID>status_load(line('.'))<cr>
     xnoremap <silent> <buffer> L :call <SID>status_load(line('.'))<cr>
   end
 endfunction
 
+function! s:extract_name(str, prefix, suffix)
+  return matchstr(a:str, '^'.a:prefix.' \zs[^:]\+\ze:.*'.a:suffix.'$')
+endfunction
+
 function! s:status_load(lnum)
   let line = getline(a:lnum)
-  let matches = matchlist(line, '^- \([^:]*\):.*(not loaded)$')
-  if !empty(matches)
-    let name = matches[1]
+  let name = s:extract_name(line, '-', '(not loaded)')
+  if !empty(name)
     call plug#load(name)
     setlocal modifiable
     call setline(a:lnum, substitute(line, ' (not loaded)$', '', ''))
     setlocal nomodifiable
+  endif
+endfunction
+
+function! s:status_update() range
+  let lines = getline(a:firstline, a:lastline)
+  let names = filter(map(lines, 's:extract_name(v:val, "[x-]", "")'), '!empty(v:val)')
+  if !empty(names)
+    echo
+    execute 'PlugUpdate' join(names)
   endif
 endfunction
 
@@ -1238,8 +1281,12 @@ function! s:revert()
   echo 'Reverted.'
 endfunction
 
-let s:first_rtp = s:esc(get(split(&rtp, ','), 0, ''))
-let s:last_rtp = s:esc(get(split(&rtp, ','), -1, ''))
+function! s:split_rtp()
+  return split(&rtp, '\\\@<!,')
+endfunction
+
+let s:first_rtp = s:escrtp(get(s:split_rtp(), 0, ''))
+let s:last_rtp  = s:escrtp(get(s:split_rtp(), -1, ''))
 
 if exists('g:plugs')
   let g:plugs_order = get(g:, 'plugs_order', keys(g:plugs))
