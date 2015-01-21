@@ -7,9 +7,10 @@ Plug 'pangloss/vim-javascript'
 Plug 'briancollins/vim-jst'
 Plug 'avakhov/vim-yaml'
 Plug 'greyblake/vim-preview'
-Plug 'bling/vim-airline'
+Plug 'itchyny/lightline.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'hail2u/vim-css3-syntax'
+Plug 'othree/html5-syntax.vim'
 " Plug 'Shougo/unite.vim'
 " Plug 'airblade/vim-gitgutter'
 
@@ -21,7 +22,7 @@ Plug 'garbas/vim-snipmate'
 Plug 'honza/vim-snippets'
 Plug 'p0deje/vim-ruby-interpolation'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 " Plug 'svermeulen/vim-easyclip'
 
 Plug 'tpope/vim-rails'
@@ -63,6 +64,7 @@ set list
 set listchars=trail:•             " Show spaces in end of line
 set autoread                      " Update open files when changed externally
 set relativenumber                " Set relative line numbers
+" set iskeyword-=_                  " Underscore brakes the word
 set laststatus=2
 set re=1
 set ttyfast
@@ -124,8 +126,8 @@ let g:syntastic_enable_highlighting=0
 " let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 " FuzzyFinder
-let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(_site|tmp|vendor)[/\\]|(^|[/\\])tmp[/\\]vendor[/\\]'
-let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(_site|tmp|vendor)[/\\]|(^|[/\\])tmp[/\\]vendor[/\\]'
+let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(_site|tmp|public|coverage)[/\\]|(^|[/\\])tmp[/\\]vendor[/\\]'
+let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(_site|tmp|public|coverage)[/\\]|(^|[/\\])tmp[/\\]vendor[/\\]'
 let g:fuf_enumeratingLimit = 30
 map <A-S-o> :FufCoverageFile<CR>
 nnoremap <silent> <S-tab> :FufBuffer<CR>
