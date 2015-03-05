@@ -15,6 +15,7 @@ Plug 'othree/html5-syntax.vim'
 " Plug 'Shougo/unite.vim'
 " Plug 'airblade/vim-gitgutter'
 
+Plug 'KabbAmine/vCoolor.vim'
 Plug 'scrooloose/syntastic'
 "
 Plug 'MarcWeber/vim-addon-mw-utils'
