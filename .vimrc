@@ -12,6 +12,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'othree/html5-syntax.vim'
+Plug 'othree/html5.vim'
 " Plug 'Shougo/unite.vim'
 " Plug 'airblade/vim-gitgutter'
 
