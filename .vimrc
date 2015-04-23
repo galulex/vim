@@ -92,6 +92,9 @@ vnoremap > >gv
 cmap w!! %!sudo tee > /dev/null %
 " autocmd! bufwritepost .vimrc nested source %
 inoremap <c-x><c-]> <c-]>
+let g:webdevicons_enable_nerdtree = 0
+let g:webdevicons_enable_airline_statusline = 1
+let g:webdevicons_enable_airline_tabline = 1
 
 " Bubble single&multiple lines
 vnoremap <C-Up> <esc>`<gv:m '<-2<cr>gv
@@ -126,7 +129,7 @@ let g:syntastic_enable_signs=1
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_enable_highlighting=0
-" let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 " FuzzyFinder
 let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(_site|tmp|public|coverage)[/\\]|(^|[/\\])tmp[/\\]vendor[/\\]'
