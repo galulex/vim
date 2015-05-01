@@ -13,6 +13,7 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'othree/html5-syntax.vim'
 Plug 'othree/html5.vim'
+Plug 'EasyGrep'
 " Plug 'Shougo/unite.vim'
 " Plug 'airblade/vim-gitgutter'
 
@@ -145,12 +146,12 @@ map <C-x> <esc>gcu<end>
 vmap <C-c> gc
 
 " Rails
-map gV :Rview<CR>
-map gC :Rcontroller<CR>
-map gM :Rmodel<CR>
-map gH :Rhelper<CR>
-map gJ :Rjavascript<CR>
-map gS :Rstylesheet<CR>
+map gV :Eview<CR>
+map gC :Econtroller<CR>
+map gM :Emodel<CR>
+map gH :Ehelper<CR>
+map gJ :Ejavascript<CR>
+map gS :Estylesheet<CR>
 
 " to start vim maximized
 function Maximize_Window()
