@@ -10,10 +10,13 @@ Plug 'greyblake/vim-preview'
 Plug 'bling/vim-airline'
 Plug 'Raimondi/delimitMate'
 Plug 'hail2u/vim-css3-syntax'
+Plug 'JulesWang/css.vim'
+Plug 'cakebaker/scss-syntax.vim'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'othree/html5-syntax.vim'
 Plug 'othree/html5.vim'
-Plug 'EasyGrep'
+Plug 'ap/vim-css-color'
+Plug 'itchyny/calendar.vim'
 " Plug 'Shougo/unite.vim'
 " Plug 'airblade/vim-gitgutter'
 
@@ -38,7 +41,7 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'vtreeexplorer'
 Plug 'grep.vim'
-" Plug 'VIM-Color-Picker'
+Plug 'EasyGrep'
 Plug 'LargeFile'
 Plug 'L9'
 Plug 'FuzzyFinder'
@@ -131,6 +134,9 @@ let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_enable_highlighting=0
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
 
 " FuzzyFinder
 let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(_site|tmp|public|coverage)[/\\]|(^|[/\\])tmp[/\\]vendor[/\\]'
