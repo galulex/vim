@@ -25,7 +25,7 @@ Plug 'scrooloose/syntastic'
 "
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
+Plug 'activebridge/rails-snippets'
 Plug 'honza/vim-snippets'
 Plug 'p0deje/vim-ruby-interpolation'
 Plug 'terryma/vim-multiple-cursors'
@@ -84,6 +84,7 @@ set synmaxcol=160
 " set noballooneval
 filetype plugin on                " Turn on file type detection.
 filetype indent on                " Turn on file indent detection.
+set tags=tmp/
 
 autocmd BufWritePre *.* :%s/\s\+$//e
 " autocmd BufWritePre {*.rb,*.js,*.coffee,*.scss,*.haml,*.slim,*.erb,*.css,*.html,*.yml} :%s/\s\+$//e
@@ -169,3 +170,14 @@ if exists("+undofile")
     set udf
     set undodir=~/.vim/undo
 endif
+
+" vp doesn't replace paste buffer
+function! RestoreRegister()
+  let @" = s:restore_reg
+  return ''
+endfunction
+function! s:Repl()
+  let s:restore_reg = @"
+  return "p@=RestoreRegister()\<cr>"
+endfunction
+vmap <silent> <expr> p <sid>Repl()
