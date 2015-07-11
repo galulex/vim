@@ -17,6 +17,7 @@ Plug 'othree/html5-syntax.vim'
 Plug 'othree/html5.vim'
 Plug 'ap/vim-css-color'
 Plug 'itchyny/calendar.vim'
+Plug 'ntpeters/vim-airline-colornum'
 " Plug 'Shougo/unite.vim'
 " Plug 'airblade/vim-gitgutter'
 
@@ -49,6 +50,7 @@ Plug 'Toggle'
 Plug 'surround.vim'
 Plug 'yaml.vim'
 Plug 'rainbow-end'
+Plug 'vim-qf'
 
 call plug#end()
 
@@ -140,8 +142,10 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
 " FuzzyFinder
-let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(_site|tmp|public|coverage)[/\\]|(^|[/\\])tmp[/\\]vendor[/\\]'
-let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(_site|tmp|public|coverage)[/\\]|(^|[/\\])tmp[/\\]vendor[/\\]'
+let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])(.hg|.git|.bzr|_site|tmp|public|coverage)'
+let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])(.hg|.git|.bzr|_site|tmp|public|coverage)'
+" let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.rake', '**/*.js', '**/*.coffee', '**/*.css', '**/*.scss', '**/*.sass', '**/*.less', '**/*.html', '**/*.haml', '**/*.slim', '**/*.erb']
+
 let g:fuf_enumeratingLimit = 30
 map <A-S-o> :FufCoverageFile<CR>
 nnoremap <silent> <S-tab> :FufBuffer<CR>
