@@ -18,6 +18,8 @@ Plug 'othree/html5.vim'
 Plug 'ap/vim-css-color'
 Plug 'itchyny/calendar.vim'
 Plug 'ntpeters/vim-airline-colornum'
+Plug 'blueyed/vim-diminactive'
+Plug 'AndrewRadev/splitjoin.vim'
 " Plug 'Shougo/unite.vim'
 " Plug 'airblade/vim-gitgutter'
 
@@ -40,7 +42,6 @@ Plug 'tpope/vim-haml'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 
-Plug 'vtreeexplorer'
 Plug 'grep.vim'
 Plug 'EasyGrep'
 Plug 'LargeFile'
@@ -56,6 +57,7 @@ call plug#end()
 
 " Vim
 colo railscasts                   " Theme
+set guifont=Monospace\ 12         " Font
 set expandtab ts=2 sw=2 ai        " Two spaces insted tab
 set showtabline=2                 " Always shows tabs on top
 set backspace=indent,eol,start    " Intuitive backspacing.
@@ -143,7 +145,7 @@ let g:calendar_google_task = 1
 
 " FuzzyFinder
 let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])(.hg|.git|.bzr|_site|tmp|public|coverage)'
-let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])(.hg|.git|.bzr|_site|tmp|public|coverage)'
+let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])(.hg|.git|.bzr|_site|tmp|public|coverage|node_modules)'
 " let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.rake', '**/*.js', '**/*.coffee', '**/*.css', '**/*.scss', '**/*.sass', '**/*.less', '**/*.html', '**/*.haml', '**/*.slim', '**/*.erb']
 
 let g:fuf_enumeratingLimit = 30
