@@ -4,24 +4,19 @@ call plug#begin('~/.vim/plugged')
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
 Plug 'pangloss/vim-javascript'
-Plug 'briancollins/vim-jst'
-Plug 'avakhov/vim-yaml'
-Plug 'greyblake/vim-preview'
+Plug 'chase/vim-ansible-yaml'
 Plug 'bling/vim-airline'
 Plug 'Raimondi/delimitMate'
 Plug 'hail2u/vim-css3-syntax'
-Plug 'JulesWang/css.vim'
-Plug 'cakebaker/scss-syntax.vim'
+Plug 'othree/svg-properties-syntax.vim'
 Plug 'ryanoasis/vim-webdevicons'
-Plug 'othree/html5-syntax.vim'
 Plug 'othree/html5.vim'
 Plug 'ap/vim-css-color'
 Plug 'itchyny/calendar.vim'
 Plug 'ntpeters/vim-airline-colornum'
 Plug 'blueyed/vim-diminactive'
 Plug 'AndrewRadev/splitjoin.vim'
-" Plug 'Shougo/unite.vim'
-" Plug 'airblade/vim-gitgutter'
+" Plug 'yuttie/comfortable-motion.vim'
 
 Plug 'KabbAmine/vCoolor.vim'
 Plug 'scrooloose/syntastic'
@@ -32,8 +27,6 @@ Plug 'activebridge/rails-snippets'
 Plug 'honza/vim-snippets'
 Plug 'p0deje/vim-ruby-interpolation'
 Plug 'terryma/vim-multiple-cursors'
-" Plug 'ervandew/supertab'
-" Plug 'svermeulen/vim-easyclip'
 
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
@@ -49,7 +42,6 @@ Plug 'L9'
 Plug 'FuzzyFinder'
 Plug 'Toggle'
 Plug 'surround.vim'
-Plug 'yaml.vim'
 Plug 'rainbow-end'
 Plug 'vim-qf'
 
@@ -57,7 +49,7 @@ call plug#end()
 
 " Vim
 colo railscasts                   " Theme
-set guifont=Monospace\ 12         " Font
+set guifont=Monospace\ 10         " Font
 set expandtab ts=2 sw=2 ai        " Two spaces insted tab
 set showtabline=2                 " Always shows tabs on top
 set backspace=indent,eol,start    " Intuitive backspacing.
