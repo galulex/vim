@@ -14,7 +14,7 @@ Plug 'othree/html5.vim'
 Plug 'ap/vim-css-color'
 Plug 'itchyny/calendar.vim'
 Plug 'ntpeters/vim-airline-colornum'
-Plug 'blueyed/vim-diminactive'
+" Plug 'blueyed/vim-diminactive'
 Plug 'AndrewRadev/splitjoin.vim'
 " Plug 'yuttie/comfortable-motion.vim'
 
@@ -149,6 +149,7 @@ map <F5> :FufRenewCache<cr>
 map <C-c> <esc>gcc<end>
 map <C-x> <esc>gcu<end>
 vmap <C-c> gc
+map cp "+y<CR>
 
 " Rails
 map gV :Eview<CR>
@@ -179,3 +180,6 @@ function! s:Repl()
   return "p@=RestoreRegister()\<cr>"
 endfunction
 vmap <silent> <expr> p <sid>Repl()
+
+"Open current directory
+map <S-w> :e %:h<CR>
