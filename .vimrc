@@ -14,12 +14,9 @@ Plug 'othree/html5.vim'
 Plug 'ap/vim-css-color'
 Plug 'itchyny/calendar.vim'
 Plug 'ntpeters/vim-airline-colornum'
-" Plug 'blueyed/vim-diminactive'
 Plug 'AndrewRadev/splitjoin.vim'
-" Plug 'yuttie/comfortable-motion.vim'
 
 Plug 'KabbAmine/vCoolor.vim'
-Plug 'scrooloose/syntastic'
 "
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -35,15 +32,16 @@ Plug 'tpope/vim-haml'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 
-Plug 'grep.vim'
-Plug 'EasyGrep'
-Plug 'LargeFile'
-Plug 'L9'
-Plug 'FuzzyFinder'
-Plug 'Toggle'
-Plug 'surround.vim'
-Plug 'rainbow-end'
-Plug 'vim-qf'
+Plug 'vim-scripts/grep.vim'
+Plug 'vim-scripts/EasyGrep'
+Plug 'vim-scripts/LargeFile'
+Plug 'vim-scripts/L9'
+Plug 'vim-scripts/FuzzyFinder'
+Plug 'vim-scripts/Toggle'
+Plug 'vim-scripts/surround.vim'
+Plug 'vim-scripts/rainbow-end'
+Plug 'vim-scripts/vim-qf'
+Plug 'w0rp/ale'
 
 call plug#end()
 
@@ -124,13 +122,6 @@ map <C-f> :Rgrep<cr>
 let Grep_Default_Filelist = '*.*'
 let Grep_Skip_Files = '*.log *.sql *.png *.jpg *.jpeg *.gif'
 let Grep_Skip_Dirs = '.git tmp system coverage log solr public _site'
-
-" Syntastic
-let g:syntastic_enable_signs=1
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_enable_highlighting=0
-let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
