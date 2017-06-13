@@ -37,12 +37,12 @@ Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/EasyGrep'
 Plug 'vim-scripts/LargeFile'
 Plug 'vim-scripts/L9'
-Plug 'vim-scripts/FuzzyFinder'
 Plug 'vim-scripts/Toggle'
 Plug 'vim-scripts/surround.vim'
 Plug 'vim-scripts/rainbow-end'
 Plug 'vim-scripts/vim-qf'
 Plug 'w0rp/ale'
+Plug 'ctrlpvim/ctrlp.vim'
 
 call plug#end()
 
@@ -130,15 +130,12 @@ let g:diminactive_use_syntax = 1
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
-" FuzzyFinder
-let g:fuf_file_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])(.hg|.git|.bzr|_site|tmp|public|coverage)'
-let g:fuf_coveragefile_exclude = '\v\~$|\.(bak|swp|png|jpg|jpeg|log|sql|bmp|gif|svg|pdf)$|(^|[/\\])(.hg|.git|.bzr|_site|tmp|public|coverage|node_modules)'
-" let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.rake', '**/*.js', '**/*.coffee', '**/*.css', '**/*.scss', '**/*.sass', '**/*.less', '**/*.html', '**/*.haml', '**/*.slim', '**/*.erb']
+" CtrlP
+let g:ctrlp_map = '<A-S-o>'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:10'
 
-let g:fuf_enumeratingLimit = 30
-map <A-S-o> :FufCoverageFile<CR>
-nnoremap <silent> <S-tab> :FufBuffer<CR>
-map <F5> :FufRenewCache<cr>
+nnoremap <silent> <S-tab> :CtrlPBuffer<CR>
 
 " Commentary
 map <C-c> <esc>gcc<end>
