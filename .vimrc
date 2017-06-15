@@ -113,11 +113,9 @@ inoremap <C-tab>   <Esc>:tabnext<CR>i
 inoremap <C-t>     <Esc>:tabnew<CR>
 inoremap <C-e>     <Esc>:q!<CR>i
 
-"VSTreeExplorer
-let treeExplVertical=1
-let treeExplDirSort=1
-let treeExplWinSize=40
-command E VSTreeExplore
+
+" ALE
+let g:ale_fix_on_save = 1
 
 " Rgrep
 map <C-f> :Rgrep<cr>
@@ -133,7 +131,7 @@ let g:calendar_google_task = 1
 
 " CtrlP
 let g:ctrlp_map = '<A-S-o>'
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|tmp|coverage|log)$'
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:10'
 
 nnoremap <silent> <S-tab> :CtrlPBuffer<CR>
