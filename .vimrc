@@ -44,6 +44,7 @@ Plug 'vim-scripts/rainbow-end'
 Plug 'vim-scripts/vim-qf'
 Plug 'w0rp/ale'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'rhysd/vim-crystal'
 
 call plug#end()
 
@@ -75,7 +76,7 @@ set lazyredraw
 set nocursorcolumn
 set nocursorline
 syntax sync minlines=256
-set synmaxcol=160
+set synmaxcol=300
 " set clipboard=unnamed
 " set noballooneval
 filetype plugin on                " Turn on file type detection.
@@ -116,6 +117,9 @@ inoremap <C-e>     <Esc>:q!<CR>i
 
 " ALE
 let g:ale_fix_on_save = 1
+let g:lint_on_insert_leave = 1
+let g:lint_on_text_changed = 0
+" let g:ale_sign_column_always=1
 
 " Rgrep
 map <C-f> :Rgrep<cr>
