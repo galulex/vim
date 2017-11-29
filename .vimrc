@@ -45,6 +45,7 @@ Plug 'vim-scripts/vim-qf'
 Plug 'w0rp/ale'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'rhysd/vim-crystal'
+Plug 'mhinz/vim-startify'
 
 call plug#end()
 
