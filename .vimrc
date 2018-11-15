@@ -83,6 +83,9 @@ set synmaxcol=300
 filetype plugin on                " Turn on file type detection.
 filetype indent on                " Turn on file indent detection.
 set tags=tmp/
+set noballooneval
+setlocal balloonexpr=
+set balloondelay=100000
 
 autocmd BufWritePre *.* :%s/\s\+$//e
 " autocmd BufWritePre {*.rb,*.js,*.coffee,*.scss,*.haml,*.slim,*.erb,*.css,*.html,*.yml} :%s/\s\+$//e
@@ -126,7 +129,7 @@ let g:lint_on_text_changed = 0
 map <C-f> :Rgrep<cr>
 let Grep_Default_Filelist = '*.*'
 let Grep_Skip_Files = '*.log *.sql *.png *.jpg *.jpeg *.gif'
-let Grep_Skip_Dirs = '.git tmp system coverage log solr public _site'
+let Grep_Skip_Dirs = '.git tmp system coverage log solr public _site node_modules'
 
 let g:diminactive_use_colorcolumn = 0
 let g:diminactive_use_syntax = 1
@@ -135,8 +138,8 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
 " CtrlP
-let g:ctrlp_map = '<A-S-o>'
-let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|tmp|coverage|log)$'
+let g:ctrlp_map = '<A-o>'
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|tmp|coverage|log|node_modules)$'
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:10'
 
 nnoremap <silent> <S-tab> :CtrlPBuffer<CR>
