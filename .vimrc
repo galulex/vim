@@ -4,6 +4,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'chase/vim-ansible-yaml'
 Plug 'bling/vim-airline'
 Plug 'Raimondi/delimitMate'
@@ -51,7 +52,7 @@ call plug#end()
 
 " Vim
 colo railscasts                   " Theme
-set guifont=Monospace\ 10         " Font
+set guifont=Monospace\ 12         " Font
 set expandtab ts=2 sw=2 ai        " Two spaces insted tab
 set showtabline=2                 " Always shows tabs on top
 set backspace=indent,eol,start    " Intuitive backspacing.
