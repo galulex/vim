@@ -4,7 +4,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'chase/vim-ansible-yaml'
 Plug 'bling/vim-airline'
 Plug 'Raimondi/delimitMate'
