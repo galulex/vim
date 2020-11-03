@@ -111,11 +111,15 @@ nnoremap <C-Down> mz:m+<cr>`z
 
 " Tabs
 nnoremap <C-S-tab> :tabprevious<CR>
+nnoremap <C-Up>    :tabprevious<CR>
 nnoremap <C-tab>   :tabnext<CR>
+nnoremap <C-Down>  :tabnext<CR>
 nnoremap <C-t>     :tabnew<CR>
 nnoremap <C-e>     :q!<CR>
 inoremap <C-S-tab> <Esc>:tabprevious<CR>i
+inoremap <C-Up>  <Esc>:tabprevious<CR>i
 inoremap <C-tab>   <Esc>:tabnext<CR>i
+inoremap <C-Down>  <Esc>:tabnext<CR>i
 inoremap <C-t>     <Esc>:tabnew<CR>
 inoremap <C-e>     <Esc>:q!<CR>i
 
