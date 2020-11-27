@@ -1,52 +1,59 @@
 call plug#begin('~/.vim/plugged')
 
 " Plugins
+
+" Syntax
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'chase/vim-ansible-yaml'
-Plug 'bling/vim-airline'
-Plug 'Raimondi/delimitMate'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'othree/svg-properties-syntax.vim'
-Plug 'ryanoasis/vim-webdevicons'
 Plug 'othree/html5.vim'
 Plug 'ap/vim-css-color'
 Plug 'gcorne/vim-sass-lint'
-Plug 'itchyny/calendar.vim'
-Plug 'blueyed/vim-diminactive'
-Plug 'ntpeters/vim-airline-colornum'
-Plug 'AndrewRadev/splitjoin.vim'
+Plug 'vim-scripts/indentpython.vim' " python
+Plug 'KabbAmine/vCoolor.vim' " :VCoolor – colorpicer
+Plug 'p0deje/vim-ruby-interpolation'
+Plug 'vim-scripts/rainbow-end'
+Plug 'w0rp/ale'
+Plug 'rhysd/vim-crystal'
 
-Plug 'KabbAmine/vCoolor.vim'
-"
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
+" Styles
+Plug 'ryanoasis/vim-webdevicons'
+Plug 'blueyed/vim-diminactive'
+Plug 'mhinz/vim-startify' " Start screen
+
+" Bottom line
+Plug 'bling/vim-airline'
+Plug 'ntpeters/vim-airline-colornum'
+
+" Tools
+Plug 'itchyny/calendar.vim' " :Calendar
+Plug 'AndrewRadev/splitjoin.vim' " gS gJ single-line -> multi-line statemane
+Plug 'Raimondi/delimitMate' " Closing quotes, brackets etc.
 Plug 'activebridge/rails-snippets'
 Plug 'honza/vim-snippets'
-Plug 'p0deje/vim-ruby-interpolation'
-Plug 'terryma/vim-multiple-cursors'
-
+Plug 'terryma/vim-multiple-cursors' " Multiple selection <C-n>
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-haml'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-
-Plug 'vim-scripts/grep.vim'
+Plug 'tpope/vim-fugitive' " Git :help Git
+Plug 'vim-scripts/grep.vim' " <C-f>
 Plug 'vim-scripts/EasyGrep'
+Plug 'vim-scripts/Toggle' " <S-+> – true -> false, positive -> negative etc.
+Plug 'vim-scripts/surround.vim' " Press cs"' (double quote -> single quote) inside
+Plug 'ctrlpvim/ctrlp.vim'
+
+" Other
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
 Plug 'vim-scripts/LargeFile'
 Plug 'vim-scripts/L9'
-Plug 'vim-scripts/Toggle'
-Plug 'vim-scripts/surround.vim'
-Plug 'vim-scripts/rainbow-end'
 Plug 'vim-scripts/vim-qf'
-Plug 'w0rp/ale'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'rhysd/vim-crystal'
-Plug 'mhinz/vim-startify'
 
 call plug#end()
 
@@ -143,8 +150,8 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
 " CtrlP
-let g:ctrlp_map = '<A-o>'
-let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|tmp|coverage|log|node_modules)$'
+let g:ctrlp_map = '<A-o>' " Comment if you use OSX
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|tmp|coverage|log|node_modules|fixtures)$'
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:10'
 
 nnoremap <silent> <S-tab> :CtrlPBuffer<CR>
@@ -153,7 +160,6 @@ nnoremap <silent> <S-tab> :CtrlPBuffer<CR>
 map <C-c> <esc>gcc<end>
 map <C-x> <esc>gcu<end>
 vmap <C-c> gc
-map cp "+y<CR>
 
 " Rails
 map gV :Eview<CR>
@@ -185,5 +191,84 @@ function! s:Repl()
 endfunction
 vmap <silent> <expr> p <sid>Repl()
 
-"Open current directory
+" Open current directory
 map <S-w> :e %:h<CR>
+" Copy line or visual zone to clipboard
+map cp "+y<CR>
+" Copy current file path to clipboard let @+=@%<CR>
+
+" C Prerequirements
+set exrc
+set secure
+
+
+" RU
+map ё `
+map й q
+map ц w
+map у e
+map к r
+map е t
+map н y
+map г u
+map ш i
+map щ o
+map з p
+map х [
+map ъ ]
+map ф a
+map ы s
+map в d
+map а f
+map п g
+map р h
+map о j
+map л k
+map д l
+map ж ;
+map э '
+map я z
+map ч x
+map с c
+map м v
+map и b
+map т n
+map ь m
+map б ,
+map ю .
+map . /
+
+map Ё ~
+map Й Q
+map Ц W
+map У E
+map К R
+map Е T
+map Н Y
+map Г U
+map Ш I
+map Щ O
+map З P
+map Х {
+map Ъ }
+map Ф A
+map Ы S
+map В D
+map А F
+map П G
+map Р H
+map О J
+map Л K
+map Д L
+map Ж :
+map Э "
+map Я Z
+map Ч X
+map С C
+map М V
+map И B
+map Т N
+map Ь M
+map Б <
+map Ю >
+map , ?
