@@ -48,6 +48,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'rhysd/vim-crystal'
 Plug 'mhinz/vim-startify'
 Plug 'joshdick/onedark.vim'
+Plug 'mfukar/robotframework-vim'
 
 call plug#end()
 
@@ -188,6 +189,7 @@ vmap <silent> <expr> p <sid>Repl()
 
 "Open current directory
 map <S-w> :e %:h<CR>
+map <C-y> :w !xclip -sel c <CR><CR>
 
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
