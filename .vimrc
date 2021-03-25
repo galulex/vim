@@ -237,7 +237,6 @@ map ь m
 map б ,
 map ю .
 map . /
-
 map Ё ~
 map Й Q
 map Ц W
@@ -272,6 +271,8 @@ map Ь M
 map Б <
 map Ю >
 map , ?
+
+autocmd BufNewFile,BufRead *.html.erb set filetype=html.eruby
 
 command! CopyBuffer let @+ = expand('%')
 command! CopyBufferFull let @+ = expand('%:p')
