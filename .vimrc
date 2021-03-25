@@ -272,3 +272,6 @@ map Ь M
 map Б <
 map Ю >
 map , ?
+
+command! CopyBuffer let @+ = expand('%')
+command! CopyBufferFull let @+ = expand('%:p')
