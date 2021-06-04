@@ -150,7 +150,7 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
 " CtrlP
-let g:ctrlp_map = '<A-o>' " Comment if you use OSX
+" let g:ctrlp_map = '<A-o>' " Comment if you use OSX
 let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|tmp|coverage|log|node_modules|fixtures)$'
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:10'
 
