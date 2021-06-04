@@ -1,6 +1,6 @@
 # Installation
 
-     git clone https://github.com/galulex/vim.git ~/.vim
+     git clone https://github.com/savenkosy/vim.git ~/.vim
      mkdir ~/.fonts
      cd ~/.fonts && curl -fLo DroidSansMonoForPowerlinePlusNerdFileTypes.otf https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.otf?raw=true
 
