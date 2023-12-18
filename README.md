@@ -7,6 +7,14 @@
      ln -s  ~/.vim/.vimrc ~/.vimrc
      sudo apt-get install ctags wmctrl fonts-powerline
 
+# M1 Mac
+
+    brew install neovide
+
+    npm install -g @tailwindcss/language-server typescript-language-server vscode-langservers-extracted
+
+    gem install solargraph ruby-lsp rubocop
+
 Open vim and run next command: `PlugInstall`
 
 [![endorse](http://api.coderwall.com/galulex/endorsecount.png)](http://coderwall.com/galulex)
