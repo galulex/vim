@@ -13,7 +13,7 @@
 
     npm install -g @tailwindcss/language-server typescript-language-server vscode-langservers-extracted
 
-    gem install solargraph ruby-lsp rubocop
+    gem install ruby-lsp ruby-lsp-rails ruby-lsp-rspec rubocop
 
 Open vim and run next command: `PlugInstall`
 

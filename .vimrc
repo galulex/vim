@@ -32,7 +32,9 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 Plug 'nvim-telescope/telescope-live-grep-args.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'petertriho/nvim-scrollbar'
+" Plug 'petertriho/nvim-scrollbar'
+" Plug 'dstein64/nvim-scrollview'
+Plug 'lewis6991/satellite.nvim'
 Plug 'm4xshen/autoclose.nvim'
 " Plug 'mhartington/formatter.nvim'
 Plug 'NvChad/nvim-colorizer.lua'
@@ -46,12 +48,15 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'dcampos/cmp-snippy'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
+" Plug 'hrsh7th/cmp-cmdline'
 Plug 'sbdchd/neoformat'
 Plug 'onsails/lspkind.nvim'
 Plug 'justinhj/battery.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
+
+Plug 'mateuszwieloch/automkdir.nvim'
 
 if has('nvim')
   function! UpdateRemotePlugins(...)
@@ -79,12 +84,12 @@ if exists('g:neovide')
   " undo
   nnoremap <D-z> u
   inoremap <D-z> <Esc>ua
-  let g:neovide_transparency = 0.0
-  let g:transparency = 0.85
-  let g:neovide_background_color = '#000000'.printf('%x', float2nr(255 * g:transparency))
-  " let g:neovide_floating_blur_amount_x = 2.0
-  " let g:neovide_floating_blur_amount_y = 2.0
-  let g:neovide_scroll_animation_length = 0
+  let g:neovide_transparency = 0.8
+  " let g:transparency = 0.8
+  " let g:neovide_background_color = '#000000'.printf('%x', float2nr(255 * g:transparency))
+  let g:neovide_floating_blur_amount_x = 2.0
+  let g:neovide_floating_blur_amount_y = 2.0
+  let g:neovide_scroll_animation_length = 0.2
   let g:neovide_cursor_vfx_mode = "pixiedust"
   let g:neovide_cursor_animation_length = 0.05
   let g:neovide_cursor_trail_size = 0.1
@@ -93,9 +98,18 @@ if exists('g:neovide')
   let g:neovide_underline_automatic_scaling = v:false
   let g:neovide_refresh_rate = 120
   let g:neovide_refresh_rate_idle = 5
-  let g:neovide_fullscreen = v:true
+  let g:neovide_fullscreen = v:false
   let g:neovide_remember_window_size = v:true
-  let g:neovide_cursor_animate_in_insert_mode = v:false
+  let g:neovide_cursor_animate_in_insert_mode = v:true
+  let g:neovide_cursor_animate_command_line = v:true
+  let g:neovide_floating_shadow = v:true
+  let g:neovide_floating_z_height = 10
+  let g:neovide_light_angle_degrees = 45
+  let g:neovide_light_radius = 5
+  let g:neovide_scroll_animation_far_lines = 1
+  let g:neovide_theme = 'auto'
+  let g:neovide_unlink_border_highlights = v:true
+  let g:neovide_input_macos_alt_is_meta = v:true
 endif
 
 lua << EOF
@@ -124,7 +138,7 @@ lua << EOF
 
   require("mason").setup()
   require("mason-lspconfig").setup{
-    ensure_installed = { "lua_ls", "rubocop", "eslint", "html", "cssls", "jsonls", "remark_ls", "solargraph", "yamlls", "svelte" },
+    ensure_installed = { "lua_ls", "rubocop", "eslint", "html", "cssls", "jsonls", "remark_ls", "ruby_ls", "yamlls", "svelte" },
   }
   require("telescope").setup{
     defaults = {
@@ -160,13 +174,18 @@ lua << EOF
   }
 
   require("autoclose").setup({
-     options = {
-        disable_when_touch = true,
-     },
+    options = {
+      disabled_filetypes = { "text" },
+      disable_when_touch = true,
+      touch_regex = "[%w(%[{]",
+      pair_spaces = false,
+      auto_indent = true,
+      disable_command_mode = true,
+    },
   })
 
   require'colorizer'.setup {
-    filetypes = {'css', 'html', 'scss', 'sass', 'slim', 'haml', 'javascript', 'svelte', 'xml', 'json' },
+    filetypes = {'css', 'html', 'scss', 'sass', 'slim', 'haml', 'javascript', 'svelte', 'xml', 'json', 'svg' },
     user_default_options = { mode = 'foreground', css = true, lowercase = true }
   }
   require('Comment').setup()
@@ -180,15 +199,10 @@ lua << EOF
       background=false,
     }
   }
-  -- require('onedarkpro').setup  {
-  --   options = {
-  --     transparency = true
-  --   }
-  -- }
-  -- require('hlslens').setup()
+
   local function fileProgress()
-    -- local chars = { '󰝦', '󰪞', '󰪞', '󰪟', '󰪠', '󰪡', '󰪢', '󰪣', '󰪤', '󰪤', '󰪥', }
-    local chars = { '󱩎', '󱩏', '󱩐', '󱩑', '󱩒', '󱩓', '󱩔', '󱩕', '󱩕', '󰛨', '󰛨', }
+    local chars = { '󰝦', '󰪞', '󰪞', '󰪟', '󰪠', '󰪡', '󰪢', '󰪣', '󰪤', '󰪤', '󰪥', }
+    -- local chars = { '󱩎', '󱩏', '󱩐', '󱩑', '󱩒', '󱩓', '󱩔', '󱩕', '󱩕', '󰛨', '󰛨', }
     local current_line = vim.fn.line('.')
     local total_lines = vim.fn.line('$')
     if total_lines < 20 then return '' end
@@ -208,8 +222,8 @@ lua << EOF
   end
 
   local function iconMode()
-    local icons = { n = '󰰓  󰌌', c = '󰯲  ', v = '󰰫  󰩬', V = '󰰫  󰫙', ["^V"] = '󰰫  󱊁', i = '󰰄  󰗧', b = '󰯯  ', t = '󰰥  ', nt = '󰰥  ', }
-    return icons[vim.api.nvim_get_mode().mode] or '󰰫  󱊁'
+    local icons = { n = ' 󰰓 󰌌', c = ' 󰯲 ', v = ' 󰰫 󰩬', V = ' 󰰫 󰫙', ["^V"] = ' 󰰫 󱊁', i = ' 󰰄 󰗧', b = ' 󰯯 ', t = ' 󰰥 ', nt = ' 󰰥 ', }
+    return icons[vim.api.nvim_get_mode().mode] or ' 󰰫 󱊁'
   end
 
   local function modeColor()
@@ -249,7 +263,8 @@ lua << EOF
     local y = string.format("%3d", c + 1)
     x = x:gsub('1', '󰬺'):gsub('2', '󰬻'):gsub('3', '󰬼'):gsub('4', '󰬽'):gsub('5', '󰬾'):gsub('6', '󰬿'):gsub('7', '󰭀'):gsub('8', '󰭁'):gsub('9', '󰭂'):gsub('0', '󰬹')
     y = y:gsub('1', '󰬺'):gsub('2', '󰬻'):gsub('3', '󰬼'):gsub('4', '󰬽'):gsub('5', '󰬾'):gsub('6', '󰬿'):gsub('7', '󰭀'):gsub('8', '󰭁'):gsub('9', '󰭂'):gsub('0', '󰬹')
-    return string.format('%s%s󰖳%s󱐕', y, x, total)
+    -- return string.format('%s%s󰖳%s󱐕', y, x, total)
+    return string.format('%s%s%s', y, x, total)
   end
 
   require'battery'.setup({
@@ -269,23 +284,31 @@ lua << EOF
       globalstatus = true,
       disabled_file_types = {'netrw'},
       -- component_separators = { left = '', right = ''},
-      component_separators = { left = ' ', right = ''},
-      section_separators = { left = ' ', right = ''},
+      component_separators = { left = '', right = '' },
+      section_separators = { left = '', right = '' },
+      -- section_separators = { left = ' ', right = ''},
       -- section_separators = { left = '', right = ''},
     },
     sections = {
       lualine_a = {
-        { iconMode, {
-          separator = { left = ' ', right = ' '},
-        } },
+        { iconMode,
+          padding = 0,
+          color = function(section)
+             return { fg = modeColor(), bg = '#000000' }
+          end,
+          separator = { left = '', right = ' ' },
+        },
          -- { 'mode' },
       },
       lualine_b = {
         {
           'branch',
-          color = { bg = '#333333', gui='italic,bold', fg='#e5c07b' },
+          -- color = { bg = '#333333', gui='italic,bold', fg='#e5c07b' },
+          color = function(section)
+             return { fg = modeColor(), gui='italic,bold', bg = '#000000' }
+          end,
           icon = '',
-          separator = { left = ' ', right = ''},
+          -- separator = { left = ' ', right = ''},
           on_click = function(count, btn, keys)
             builtin.git_branches({
               prompt_title = '🔭',
@@ -324,8 +347,8 @@ lua << EOF
       lualine_x = {
         { 'diagnostics',
           padding = 0,
-          separator = { left = '', right = ''},
-          color = { bg = '#333333', gui='italic' },
+          -- separator = { left = '', right = ''},
+          color = { bg = '#000000', gui='italic' },
           symbols = { error = '', warn = '', info = '', hint = '' },
         },
         { spacer, padding = 0 },
@@ -334,9 +357,9 @@ lua << EOF
           colored = true,
           icon = '',
           padding = 0,
-          separator = { left = ' ', right = ' '},
-          color = { bg = '#222222', gui='italic,bold' },
-          symbols = {added = '󰐗 ', modified = '󰆗 ', removed = '󰅙 '},
+          separator = { left = ' ', right = ' '},
+          color = { bg = '#000000', gui='italic,bold' },
+          symbols = { added = '󰐗 ', modified = '󰆗 ', removed = '󰅙 ' },
           on_click = function(count, btn, keys)
             builtin.git_status({
               prompt_title = '🔭',
@@ -357,22 +380,35 @@ lua << EOF
         { iconScroll, padding=0, color = { bg=none, } },
       },
       lualine_y = {
-        { 'fileformat', color = { bg='#333333' } },
+        { 'fileformat', color = { bg='#000000' } },
         -- { 'location', color = { bg='#333333' }, padding = 0 },
-        { iconLine, padding=1, color = { bg='#333333', fg='#98c379' } },
-        { fileProgress, padding=0, color = { bg='#333333' } },
+        { iconLine,
+          padding=1,
+          color = function(section)
+             return { fg = modeColor(), bg = '#000000' }
+          end,
+        },
+        { fileProgress, padding=0, color = { bg='#000000' } },
         -- { spacer, padding = 0, color = { bg='none' } },
       },
       lualine_z = {
-        { spacer, padding = 0 },
+        -- { spacer, padding = 0 },
         {
           nvimbattery,
           padding=0,
-          color = { gui='italic,bold' },
+          color = function(section)
+             return { fg = modeColor(), bg = '#000000' }
+          end,
         },
         {
           iconTime,
-          color = { gui='italic' },
+          -- color = {
+          --   gui ='italic',
+          --   fg = '#ffffff'
+          -- },
+          color = function(section)
+             return { fg = modeColor(), bg = '#000000' }
+          end,
         },
       }
     },
@@ -384,7 +420,7 @@ lua << EOF
     --     padding = 10,
     --     use_mode_colors = true,
     --     symbols = {
-    --       modified = ' ●',      -- Text to show when the buffer is modified
+    --       modified = '',      -- Text to show when the buffer is modified
     --       alternate_file = '', -- Text to show to identify the alternate file
     --       directory =  '',     -- Text to show when the buffer is a directory
     --     },
@@ -411,31 +447,64 @@ lua << EOF
     --   lualine_y = {},
     --   lualine_z = {}
     -- }
-  -- require("scrollbar.handlers.gitsigns").setup()
-  -- require("scrollbar.handlers.search").setup({
-  --   handlers = { search = true },
-  -- })
-  require("scrollbar").setup({
-    show_in_active_only = true,
-    hide_if_all_visible = true,
-    -- set_highlights = false,
-    throttle_ms = 10,
-    handle = {
-        -- text = "│",
-        text = " ",
-        blend = 30, -- Integer between 0 and 100. 0 for fully opaque and 100 to full transparent. Defaults to 30.
-        color = '#30363d',
-        color_nr = nil, -- cterm
-        highlight = "CursorColumn",
-        hide_if_all_visible = true, -- Hides handle if all lines are visible
+
+  require('satellite').setup {
+  current_only = false,
+  winblend = 30,
+  zindex = 40,
+  excluded_filetypes = {},
+  width = 2,
+  handlers = {
+    cursor = {
+      enable = false,
+      -- Supports any number of symbols
+      symbols = { '⎺', '⎻', '⎼', '⎽' }
+      -- symbols = { '⎻', '⎼' }
+      -- Highlights:
+      -- - SatelliteCursor (default links to NonText
     },
-    handlers = {
-        cursor = false,
-        diagnostic = true,
-        handle = true,
-        search = true, -- Requires hlslens
+    search = {
+      enable = true,
+      -- Highlights:
+      -- - SatelliteSearch (default links to Search)
+      -- - SatelliteSearchCurrent (default links to SearchCurrent)
     },
-  })
+    diagnostic = {
+      enable = true,
+      signs = {'-', '=', '≡'},
+      min_severity = vim.diagnostic.severity.HINT,
+      -- Highlights:
+      -- - SatelliteDiagnosticError (default links to DiagnosticError)
+      -- - SatelliteDiagnosticWarn (default links to DiagnosticWarn)
+      -- - SatelliteDiagnosticInfo (default links to DiagnosticInfo)
+      -- - SatelliteDiagnosticHint (default links to DiagnosticHint)
+    },
+    gitsigns = {
+      enable = false,
+      signs = { -- can only be a single character (multibyte is okay)
+        add = "│",
+        change = "│",
+        delete = "-",
+      },
+      -- Highlights:
+      -- SatelliteGitSignsAdd (default links to GitSignsAdd)
+      -- SatelliteGitSignsChange (default links to GitSignsChange)
+      -- SatelliteGitSignsDelete (default links to GitSignsDelete)
+    },
+    marks = {
+      enable = false,
+      show_builtins = false, -- shows the builtin marks like [ ] < >
+      key = 'm'
+      -- Highlights:
+      -- SatelliteMark (default links to Normal)
+    },
+    quickfix = {
+      signs = { '-', '=', '≡' },
+      -- Highlights:
+      -- SatelliteQuickfix (default links to WarningMsg)
+    }
+  },
+}
 
   require('gitsigns').setup {
     signs = {
@@ -516,7 +585,7 @@ lua << EOF
     -- 'single', 'double', 'rounded' or 'solid'
     -- can also be a list of 8 characters, see :h wilder#popupmenu_border_theme() for more details
       border = 'rounded',
-      pumblend = 15,
+      pumblend = 0,
       highlighter = wilder.highlighter_with_gradient({
         wilder.basic_highlighter(), -- or wilder.lua_fzy_highlighter(),
       }),
@@ -539,7 +608,6 @@ local handlers =  {
 
 -- require'lspconfig'.syntax_tree.setup{}
 
-
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -549,7 +617,8 @@ require'lspconfig'.tailwindcss.setup { capabilities = capabilities }
 require'lspconfig'.eslint.setup { capabilities = capabilities }
 require'lspconfig'.svelte.setup { capabilities = capabilities }
 require'lspconfig'.html.setup { capabilities = capabilities }
-require'lspconfig'.solargraph.setup { capabilities = capabilities }
+require'lspconfig'.ruby_ls.setup { capabilities = capabilities }
+require'lspconfig'.rubocop.setup { capabilities = capabilities }
 
 local nvim_lsp = require('lspconfig')
 function PrintDiagnostics(opts, bufnr, line_nr, client_id)
@@ -629,10 +698,11 @@ vim.cmd [[autocmd! CursorHold,CursorHoldI * lua showDiagnostic()]]
 vim.cmd [[autocmd! ColorScheme * highlight DiagnosticFloatingWarn guifg='#ffa222' guibg='#000000']]
 vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg='#777777' guibg='#000000' ]]
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  vim.fn.sign_define("Lsp" .. hl, { text = icon, texthl = hl, numhl = hl })
 end
 
   local cmp = require'cmp'
@@ -642,14 +712,17 @@ end
   vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#000000" })
   cmp.setup({
     formatting = {
+      fields = { "abbr", "kind" },
       format = lspkind.cmp_format({
         mode = 'symbol', -- show only symbol annotations
-        maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-        ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+        maxwidth = 30, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+        ellipsis_char = '…', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 
         -- The function below will be called before any actual modifications from lspkind
         -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
         before = function (entry, vim_item)
+          vim_item.abbr = string.sub(vim_item.abbr, 1, 30)
+          vim_item.menu = ""
           return vim_item
         end
       })
@@ -757,7 +830,8 @@ set re=1
 set ttyfast
 set lazyredraw
 set nocursorcolumn
-set nocursorline
+set cursorline
+set cursorlineopt=number
 syntax sync minlines=256
 set synmaxcol=300
 " set clipboard=unnamed             " Use global copy/paste buffer
@@ -767,14 +841,15 @@ set tags=tmp/
 set mousescroll=ver:1,hor:0
 set splitbelow
 set updatetime=1000
-set nocursorline
 " set laststatus=0
 
+
 " autocmd ColorScheme * highlight BufferLineFill guibg=#FFFFFF
-highlight Pmenu guibg=#161b22 gui=bold
-highlight PmenuSel guibg=#98C379 gui=bold
-highlight PmenuSbar guibg=#161b22 gui=bold
-highlight PmenuThumb guibg=#30363d gui=bold
+hi Pmenu guibg=#161b22 gui=bold
+hi PmenuSel guibg=#98C379 gui=bold
+hi PmenuSbar guibg=#161b22 gui=bold
+hi PmenuThumb guibg=#30363d gui=bold
+hi CursorLineNr guifg=#98c279
 
 autocmd BufWritePre *.* :%s/\s\+$//e
 map <D-s> :w<cr>
@@ -865,13 +940,3 @@ function! ResizeFont(delta)
 endfunction
 noremap <expr><D-=> ResizeFont(1)
 noremap <expr><D--> ResizeFont(-1)
-
-hi DiagnosticFloatingWarn guifg='#e5c07b' guibg='#000000'
-hi DiagnosticFloatingError guifg='#e06c75' guibg='#000000'
-hi DiagnosticFloatingInfo guifg='#61afef' guibg='#000000'
-hi DiagnosticFloatingHint guifg='#c678dd' guibg='#000000'
-hi TelescopeSelection guibg=none gui=bold guifg='#61afef'
-
-set cursorline
-set cursorlineopt=number
-hi CursorLineNr guifg=#98c279
