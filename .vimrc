@@ -356,7 +356,7 @@ lua << EOF
           'diff',
           colored = true,
           icon = '',
-          padding = 0,
+          padding = 1,
           separator = { left = ' ', right = ' '},
           color = { bg = '#000000', gui='italic,bold' },
           symbols = { added = '󰐗 ', modified = '󰆗 ', removed = '󰅙 ' },
@@ -377,10 +377,10 @@ lua << EOF
             })
           end
         },
-        { iconScroll, padding=0, color = { bg=none, } },
+        -- { iconScroll, padding=0, color = { bg=none, } },
       },
       lualine_y = {
-        { 'fileformat', color = { bg='#000000' } },
+        { 'fileformat', color = { bg='#000000', padding=0 } },
         -- { 'location', color = { bg='#333333' }, padding = 0 },
         { iconLine,
           padding=1,
@@ -452,7 +452,13 @@ lua << EOF
   current_only = false,
   winblend = 30,
   zindex = 40,
-  excluded_filetypes = {},
+  excluded_filetypes = {
+    "cmp_docs",
+    "cmp_menu",
+    "noice",
+    "prompt",
+    "TelescopePrompt",
+  },
   width = 2,
   handlers = {
     cursor = {
@@ -470,7 +476,7 @@ lua << EOF
       -- - SatelliteSearchCurrent (default links to SearchCurrent)
     },
     diagnostic = {
-      enable = true,
+      enable = false,
       signs = {'-', '=', '≡'},
       min_severity = vim.diagnostic.severity.HINT,
       -- Highlights:
@@ -850,6 +856,10 @@ hi PmenuSel guibg=#98C379 gui=bold
 hi PmenuSbar guibg=#161b22 gui=bold
 hi PmenuThumb guibg=#30363d gui=bold
 hi CursorLineNr guifg=#98c279
+hi DiagnosticInfo guibg=black
+hi DiagnosticHint guibg=black
+hi DiagnosticWarn guibg=black
+hi DiagnosticError guibg=black
 
 autocmd BufWritePre *.* :%s/\s\+$//e
 map <D-s> :w<cr>
