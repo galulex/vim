@@ -48,6 +48,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'dcampos/cmp-snippy'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-emoji'
 " Plug 'hrsh7th/cmp-cmdline'
 Plug 'sbdchd/neoformat'
 Plug 'onsails/lspkind.nvim'
@@ -185,8 +186,8 @@ lua << EOF
   })
 
   require'colorizer'.setup {
-    filetypes = {'css', 'html', 'scss', 'sass', 'slim', 'haml', 'javascript', 'svelte', 'xml', 'json', 'svg' },
-    user_default_options = { mode = 'foreground', css = true, lowercase = true }
+    -- filetypes = {'css', 'html', 'scss', 'sass', 'slim', 'haml', 'javascript', 'svelte', 'xml', 'json', 'svg' },
+    user_default_options = { mode = 'background', css = true, lowercase = true }
   }
   require('Comment').setup()
 
@@ -776,6 +777,7 @@ end
       },
       { name = 'nvim_lsp' },
       { name = 'snippy' }, -- For snippy users.
+      { name = 'emoji' },
     }, {
       { name = 'buffer' },
     })
@@ -860,6 +862,7 @@ hi DiagnosticInfo guibg=black
 hi DiagnosticHint guibg=black
 hi DiagnosticWarn guibg=black
 hi DiagnosticError guibg=black
+hi Normal guibg=black
 
 autocmd BufWritePre *.* :%s/\s\+$//e
 map <D-s> :w<cr>
